@@ -1,0 +1,1407 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Единая инструкция School Bot</title>
+<style>
+:root{
+  --bg:#f6efe4;
+  --paper:#fffdf8;
+  --line:#ddd1bd;
+  --text:#1f2d3a;
+  --muted:#5d6873;
+  --accent:#0f766e;
+  --accent-strong:#0a5a53;
+  --accent-soft:#e2f5f2;
+  --warn:#fff1d9;
+  --warn-line:#d98a43;
+  --dark:#172431;
+  --shadow:0 12px 40px rgba(23,36,49,.08);
+  --shadow-soft:0 8px 24px rgba(23,36,49,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at top left,#fffdf8 0,#f6efe4 42%,#efe4d2 100%);color:var(--text);font-family:"Trebuchet MS","Segoe UI",sans-serif;line-height:1.6}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:24px}
+.topbar{position:sticky;top:12px;z-index:30;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 18px;margin-bottom:18px;background:rgba(255,253,248,.84);backdrop-filter:blur(14px);border:1px solid rgba(221,209,189,.9);border-radius:20px;box-shadow:var(--shadow-soft)}
+.brand{font-weight:800;letter-spacing:.02em}
+.topnav{display:flex;flex-wrap:wrap;gap:8px}
+.topnav a{padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);text-decoration:none;font-size:14px;font-weight:700}
+.topnav a:hover{border-color:var(--accent);color:var(--accent)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#fffdf8 0,#e7f4f7 52%,#f8eadf 100%)}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:999px;opacity:.38;pointer-events:none}
+.hero:before{width:320px;height:320px;right:-110px;top:-120px;background:radial-gradient(circle,#d8f0ea 0,rgba(216,240,234,0) 70%)}
+.hero:after{width:280px;height:280px;left:-90px;bottom:-150px;background:radial-gradient(circle,#f9d9c8 0,rgba(249,217,200,0) 72%)}
+.hero>*{position:relative}
+h1,h2,h3,h4{margin:0 0 12px;color:var(--text)}
+h1{font-size:46px;line-height:1.04;max-width:760px}
+h2{font-size:30px;padding-top:6px}
+h3{font-size:22px;margin-top:18px}
+h4{font-size:18px;margin-top:14px}
+.lead{font-size:18px;max-width:820px}
+p,li{color:var(--muted)}
+ul,ol{margin:10px 0 0 22px;padding:0}
+.chips,.hero-actions,.kpis{display:flex;flex-wrap:wrap;gap:10px}
+.kpi{flex:1 1 180px;min-width:180px;padding:16px 18px;border-radius:20px;background:rgba(255,255,255,.7);border:1px solid rgba(221,209,189,.85);box-shadow:var(--shadow-soft)}
+.kpi strong{display:block;font-size:28px;line-height:1;color:var(--accent-strong);margin-bottom:6px}
+.pill,.chip{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;text-decoration:none;font-weight:700}
+.pill{background:#fff;border:1px solid var(--line)}
+.pill:hover{border-color:var(--accent);color:var(--accent)}
+.chip{background:var(--accent-soft);color:var(--accent);font-size:14px}
+.section-label{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-strong)}
+.note,.warn,.shot,.stepbox,.faq{border-radius:18px;padding:18px;margin-top:14px}
+.note{background:#eef6f8;border:1px solid #c9e4e8}
+.warn{background:var(--warn);border-left:6px solid var(--warn-line)}
+.shot{background:#fcfaf5;border:2px dashed var(--line);color:var(--muted)}
+.stepbox{background:#f9f6ef;border:1px solid var(--line)}
+.faq{background:#f4f8fb;border:1px solid #d9e8ee}
+.table{display:grid;grid-template-columns:220px 1fr;gap:10px 16px;margin-top:16px}
+.table div{padding:10px 12px;border-radius:14px;background:#faf7f1}
+.table div:nth-child(odd){font-weight:700;color:var(--text)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:16px}
+.figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:0 6px 18px rgba(23,36,49,.05);transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease}
+.figure:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(23,36,49,.09);border-color:#cdbca0}
+.figure a{display:block;text-decoration:none}
+.figure img{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;border-radius:12px;border:1px solid var(--line);background:#fff}
+.figure figcaption{margin-top:10px;color:var(--muted);font-size:14px}
+.missing{margin-top:14px;padding:14px 16px;border-radius:16px;background:#fff7ed;border:1px solid #f1c27d;color:#8a4b12}
+.section-end{display:flex;justify-content:flex-end;margin-top:18px}
+.backlink{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);text-decoration:none;font-weight:700;font-size:14px}
+.backlink:hover{border-color:var(--accent);color:var(--accent)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+code{background:#ecf4f6;padding:2px 7px;border-radius:8px}
+@media (max-width:900px){
+  .topbar{top:8px;flex-direction:column;align-items:flex-start}
+}
+@media (max-width:740px){
+  .wrap{padding:14px}
+  .card{padding:20px;border-radius:22px}
+  h1{font-size:34px}
+  h2{font-size:26px}
+  .table{grid-template-columns:1fr}
+  .kpi{min-width:unset;flex:1 1 100%}
+  .figure img{aspect-ratio:auto}
+}
+@media print{
+  body{background:#fff}
+  .topbar,.backlink{display:none !important}
+  .card{box-shadow:none;page-break-inside:avoid}
+  .figure{box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar" id="top">
+    <div class="brand">School Bot Guide</div>
+    <div class="topnav">
+      <a href="#student">🎓 Ученик</a>
+      <a href="#teacher">👩‍🏫 Учитель</a>
+      <a href="#parent">👨‍👩‍👧 Родитель</a>
+      <a href="#admin">🛠 Админ</a>
+    </div>
+  </div>
+  <section class="card hero">
+    <div class="section-label">Публикационная версия</div>
+    <h1>Единая инструкция по кабинетам School Bot</h1>
+    <p class="lead">Это подробный пользовательский справочник для ученика, учителя, родителя и администратора. Документ рассчитан на чтение с телефона прямо из Telegram: здесь есть список кнопок, пошаговые сценарии, предупреждения, типовые ошибки и реальные скриншоты интерфейса.</p>
+    <div class="hero-actions">
+      <a class="pill" href="#student">🎓 Кабинет ученика</a>
+      <a class="pill" href="#teacher">👩‍🏫 Кабинет учителя</a>
+      <a class="pill" href="#parent">👨‍👩‍👧 Кабинет родителя</a>
+      <a class="pill" href="#admin">🛠 Кабинет администратора</a>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><strong>4</strong><span>роли с отдельными кабинетами</span></div>
+      <div class="kpi"><strong>90+</strong><span>встроенных экранов и сценариев</span></div>
+      <div class="kpi"><strong>HTML</strong><span>основной формат для Telegram и хостинга</span></div>
+      <div class="kpi"><strong>PDF</strong><span>готовый формат для печати и офлайн-версии</span></div>
+    </div>
+  </section>
+
+  <section class="card" id="student">
+    <div class="section-label">🎓 Кабинет ученика</div>
+    <h2>🎓 Кабинет ученика</h2>
+    <p>Кабинет ученика нужен для ежедневной работы со школой: смотреть расписание, открывать домашние задания, проверять оценки, следить за рейтингом, общаться с AI-репетитором, участвовать в PvP и вносить монеты в общую копилку класса.</p>
+    <div class="chips">
+      <span class="chip">📚 Учёба</span>
+      <span class="chip">🎮 Развлечения</span>
+      <span class="chip">👤 Личное</span>
+      <span class="chip">ℹ️ Инструкция</span>
+    </div>
+    <div class="shot"><strong>Главный экран ученика</strong><div class="gallery">
+      <figure class="figure">
+        <a href="assets/student-main.png" target="_blank" rel="noopener">
+          <img src="assets/student-main.png" alt="показать главное меню после `/start`" loading="lazy">
+        </a>
+        <figcaption><code>student-main.png</code><br>показать главное меню после `/start`</figcaption>
+      </figure>
+    </div></div>
+
+    <h3>Что умеет кабинет ученика</h3>
+    <ul>
+      <li>Показывать расписание на сегодня, завтра и всю неделю.</li>
+      <li>Показывать домашние задания по предметам и позволять отметить задание как выполненное.</li>
+      <li>Считать средний балл и давать AI-прогноз по предмету.</li>
+      <li>Показывать профиль, XP, монеты, достижения, рейтинг и активные цели от родителей.</li>
+      <li>Показывать общую копилку класса и принимать взносы монетами.</li>
+      <li>Запускать AI-репетитора с дневным лимитом запросов.</li>
+      <li>Запускать PvP-дуэли между одноклассниками.</li>
+    </ul>
+
+    <h3>Главное меню ученика</h3>
+    <div class="table">
+      <div>📚 Учёба</div><div>Открывает учебный раздел: дневник, расписание, оценки и AI-репетитор.</div>
+      <div>🎮 Развлечения</div><div>Открывает игровые и мотивационные функции: PvP, битва классов, магазин и копилка.</div>
+      <div>👤 Личное</div><div>Показывает личные показатели: профиль, рейтинг, достижения и цели.</div>
+      <div>ℹ️ Инструкция</div><div>Открывает ссылку на эту инструкцию, закрепленную для роли ученика.</div>
+    </div>
+
+    <h3>Раздел «Учёба»</h3>
+    <div class="chips">
+      <span class="chip">📖 Дневник</span>
+      <span class="chip">📅 Расписание</span>
+      <span class="chip">🏅 Оценки</span>
+      <span class="chip">🧠 AI-Репетитор</span>
+      <span class="chip">🔙 Меню ученика</span>
+    </div>
+    <h4>📅 Расписание</h4>
+    <ol>
+      <li>Ученик нажимает <code>📅 Расписание</code>.</li>
+      <li>Бот предлагает три варианта: <code>👇 На сегодня</code>, <code>👉 На завтра</code>, <code>📅 Вся неделя</code>.</li>
+      <li>После выбора бот показывает либо конкретный день, либо полную неделю.</li>
+      <li>Кнопка <code>🔙 К выбору</code> возвращает к вариантам просмотра.</li>
+    </ol>
+    <div class="stepbox">
+      <strong>Что важно объяснить ученику:</strong>
+      <ul>
+        <li>Если класс не выбран или регистрация не завершена, расписание не откроется.</li>
+        <li>Если на день нет уроков, бот честно покажет, что это выходной или пустой день.</li>
+        <li>Расписание зависит от того, как его настроил администратор.</li>
+      </ul>
+    </div>
+    <div class="shot"><strong>Экран расписания</strong><div class="gallery">
+      <figure class="figure">
+        <a href="assets/student-schedule-menu.png" target="_blank" rel="noopener">
+          <img src="assets/student-schedule-menu.png" alt="показать варианты просмотра расписания" loading="lazy">
+        </a>
+        <figcaption><code>student-schedule-menu.png</code><br>показать варианты просмотра расписания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-schedule-day.png" target="_blank" rel="noopener">
+          <img src="assets/student-schedule-day.png" alt="показать расписание на один день" loading="lazy">
+        </a>
+        <figcaption><code>student-schedule-day.png</code><br>показать расписание на один день</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-schedule-week.png" target="_blank" rel="noopener">
+          <img src="assets/student-schedule-week.png" alt="показать просмотр всей недели" loading="lazy">
+        </a>
+        <figcaption><code>student-schedule-week.png</code><br>показать просмотр всей недели</figcaption>
+      </figure>
+    </div></div>
+
+    <h4>📖 Дневник</h4>
+    <ol>
+      <li>Ученик нажимает <code>📖 Дневник</code>.</li>
+      <li>Бот показывает список предметов кнопками.</li>
+      <li>После выбора предмета открывается актуальное домашнее задание.</li>
+      <li>Если задание еще не выполнено, появляется кнопка <code>✅ Я сделал!</code>.</li>
+      <li>После нажатия статус меняется на выполненный, а кнопка исчезает.</li>
+    </ol>
+    <div class="note">
+      <strong>Если к заданию прикреплена фотография или файл,</strong> бот отправит карточку задания вместе с вложением. Если по предмету задания нет, бот сообщит об этом отдельно.
+    </div>
+    <div class="shot"><strong>Экран дневника</strong><div class="gallery">
+      <figure class="figure">
+        <a href="assets/student-diary-subjects.png" target="_blank" rel="noopener">
+          <img src="assets/student-diary-subjects.png" alt="показать выбор предмета перед открытием домашнего задания" loading="lazy">
+        </a>
+        <figcaption><code>student-diary-subjects.png</code><br>показать выбор предмета перед открытием домашнего задания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-diary-task.png" target="_blank" rel="noopener">
+          <img src="assets/student-diary-task.png" alt="показать карточку домашнего задания до отметки о выполнении" loading="lazy">
+        </a>
+        <figcaption><code>student-diary-task.png</code><br>показать карточку домашнего задания до отметки о выполнении</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-diary-done.png" target="_blank" rel="noopener">
+          <img src="assets/student-diary-done.png" alt="показать то же задание после завершения" loading="lazy">
+        </a>
+        <figcaption><code>student-diary-done.png</code><br>показать то же задание после завершения</figcaption>
+      </figure>
+    </div></div>
+
+    <h4>🏅 Оценки</h4>
+    <ol>
+      <li>Ученик нажимает <code>🏅 Оценки</code>.</li>
+      <li>Бот предлагает выбрать предмет.</li>
+      <li>После выбора показывает список оценок по предмету и средний балл.</li>
+      <li>Дополнительно бот строит AI-прогноз: высокий уровень, хороший уровень или сколько еще нужно десяток до сильного среднего балла.</li>
+    </ol>
+    <div class="warn">
+      Если по предмету еще нет ни одной оценки, бот не сможет сделать прогноз и сообщит, что данных пока недостаточно.
+    </div>
+
+    <h4>🧠 AI-Репетитор</h4>
+    <ol>
+      <li>Ученик нажимает <code>🧠 AI-Репетитор</code>.</li>
+      <li>Бот переходит в режим диалога и ждет обычный вопрос текстом.</li>
+      <li>После ответа ученика бот отправляет запрос в AI и показывает результат.</li>
+      <li>Для выхода используется кнопка <code>❌ Закончить диалог</code>.</li>
+    </ol>
+    <div class="stepbox">
+      <strong>Ограничения режима:</strong>
+      <ul>
+        <li>У режима есть дневной лимит запросов.</li>
+        <li>Если ученик начнет нажимать другие основные кнопки, диалог с AI завершится автоматически.</li>
+        <li>Все запросы логируются и могут быть просмотрены администратором в AI-контроле.</li>
+      </ul>
+    </div>
+
+    <h3>Раздел «Развлечения»</h3>
+    <div class="chips">
+      <span class="chip">⚔️ PvP Арена</span>
+      <span class="chip">⚔️ Битва Классов</span>
+      <span class="chip">🛒 Магазин</span>
+      <span class="chip">💰 Копилка</span>
+      <span class="chip">🔙 Меню ученика</span>
+    </div>
+
+    <h4>⚔️ PvP Арена</h4>
+    <ol>
+      <li>Ученик нажимает <code>⚔️ PvP Арена</code>.</li>
+      <li>Если активной дуэли нет, бот показывает кнопку <code>🥊 Бросить вызов</code>.</li>
+      <li>После нажатия ученик выбирает соперника из своего класса.</li>
+      <li>Далее выбирает ставку: <code>50</code>, <code>100</code> или <code>200</code> монет.</li>
+      <li>Соперник получает приглашение. Если он принимает, бот генерирует вопрос и отправляет его обоим участникам.</li>
+      <li>Победителем становится тот, кто быстрее даст правильный ответ.</li>
+    </ol>
+    <div class="table">
+      <div>Если у ученика уже есть дуэль</div><div>Бот предупредит, что новая дуэль недоступна, и предложит сервисный сброс зависшей дуэли.</div>
+      <div>Если монет мало</div><div>Дуэль не создастся. Бот отдельно проверяет баланс вызывающего и соперника.</div>
+      <div>Если соперник отказался</div><div>Дуэль отменяется, обе стороны получают уведомление.</div>
+      <div>Если бот не смог отправить вызов</div><div>Проверьте, не блокировал ли соперник бота и есть ли у него активный чат с ботом.</div>
+    </div>
+    <div class="shot"><strong>PvP-сценарий ученика</strong><div class="gallery">
+      <figure class="figure">
+        <a href="assets/student-pvp-start.png" target="_blank" rel="noopener">
+          <img src="assets/student-pvp-start.png" alt="показать стартовый экран PvP Арены" loading="lazy">
+        </a>
+        <figcaption><code>student-pvp-start.png</code><br>показать стартовый экран PvP Арены</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-pvp-opponent.png" target="_blank" rel="noopener">
+          <img src="assets/student-pvp-opponent.png" alt="показать выбор соперника" loading="lazy">
+        </a>
+        <figcaption><code>student-pvp-opponent.png</code><br>показать выбор соперника</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-pvp-bet.png" target="_blank" rel="noopener">
+          <img src="assets/student-pvp-bet.png" alt="показать выбор ставки" loading="lazy">
+        </a>
+        <figcaption><code>student-pvp-bet.png</code><br>показать выбор ставки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-pvp-question.png" target="_blank" rel="noopener">
+          <img src="assets/student-pvp-question.png" alt="показать экран вопроса дуэли" loading="lazy">
+        </a>
+        <figcaption><code>student-pvp-question.png</code><br>показать экран вопроса дуэли</figcaption>
+      </figure>
+    </div></div>
+
+    <h4>⚔️ Битва Классов</h4>
+    <p>Это общий рейтинг классов по суммарному XP. Экран полезен как мотивационный: ученик видит, насколько его класс опережает или отстает от других.</p>
+
+    <h4>💰 Копилка</h4>
+    <ol>
+      <li>Ученик нажимает <code>💰 Копилка</code>.</li>
+      <li>Бот показывает цель класса: название, собранную сумму, прогресс и личный баланс ученика.</li>
+      <li>Далее можно внести <code>🪙 50</code>, <code>💰 100</code>, <code>💎 Всё, что есть</code> или выбрать <code>✍️ Своя сумма</code>.</li>
+      <li>Если цель закрывается, бот сообщит об этом отдельно.</li>
+    </ol>
+    <div class="note">Если администратор не создал активную цель класса, ученик увидит только свой баланс и сообщение, что сборов пока нет.</div>
+
+    <h3>Раздел «Личное»</h3>
+    <div class="chips">
+      <span class="chip">👤 Мой профиль</span>
+      <span class="chip">🏆 Рейтинг</span>
+      <span class="chip">🏆 Мои достижения</span>
+      <span class="chip">🔙 Меню ученика</span>
+    </div>
+    <h4>👤 Мой профиль</h4>
+    <p>Профиль показывает имя ученика, звание, XP, количество монет и персональный Telegram ID. На этом экране также доступны кнопки <code>🏆 Мои достижения</code> и просмотр активных целей от родителей.</p>
+    <h4>🏆 Рейтинг</h4>
+    <p>Рейтинг показывает лучших учеников внутри класса по XP. Это локальная таблица лидеров именно по вашему классу.</p>
+    <h4>🏆 Мои достижения</h4>
+    <p>Здесь отображаются полученные достижения: иконка, название и описание. Если достижений пока нет, бот сообщит об этом напрямую.</p>
+
+    <h3>Частые ошибки ученика</h3>
+    <div class="faq">
+      <ul>
+        <li><strong>Не открывается расписание или дневник.</strong> Обычно это значит, что ученик еще не привязан к классу или регистрация прошла не до конца.</li>
+        <li><strong>Нет домашнего задания.</strong> Либо учитель еще не выдал задание по предмету, либо задание уже неактуально.</li>
+        <li><strong>AI-репетитор молчит.</strong> Проверьте интернет, лимит запросов и не остался ли бот в другом состоянии после предыдущего сценария.</li>
+        <li><strong>PvP не стартует.</strong> Чаще всего не хватает монет, уже есть активная дуэль или соперник не начал диалог с ботом.</li>
+      </ul>
+    </div>
+
+    <h3>Скриншоты кабинета ученика</h3>
+    <p>Ниже встроены реальные экраны из <code>docs/assets</code>. Их можно открывать по клику и использовать как визуальное приложение к инструкции.</p>
+<div class="gallery">
+      <figure class="figure">
+        <a href="assets/student-main.png" target="_blank" rel="noopener">
+          <img src="assets/student-main.png" alt="показать главное меню после `/start`" loading="lazy">
+        </a>
+        <figcaption><code>student-main.png</code><br>показать главное меню после `/start`</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-study-menu.png" target="_blank" rel="noopener">
+          <img src="assets/student-study-menu.png" alt="показать содержимое папки `📚 Учёба`" loading="lazy">
+        </a>
+        <figcaption><code>student-study-menu.png</code><br>показать содержимое папки `📚 Учёба`</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-schedule-menu.png" target="_blank" rel="noopener">
+          <img src="assets/student-schedule-menu.png" alt="показать варианты просмотра расписания" loading="lazy">
+        </a>
+        <figcaption><code>student-schedule-menu.png</code><br>показать варианты просмотра расписания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-schedule-day.png" target="_blank" rel="noopener">
+          <img src="assets/student-schedule-day.png" alt="показать расписание на один день" loading="lazy">
+        </a>
+        <figcaption><code>student-schedule-day.png</code><br>показать расписание на один день</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-schedule-week.png" target="_blank" rel="noopener">
+          <img src="assets/student-schedule-week.png" alt="показать просмотр всей недели" loading="lazy">
+        </a>
+        <figcaption><code>student-schedule-week.png</code><br>показать просмотр всей недели</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-diary-subjects.png" target="_blank" rel="noopener">
+          <img src="assets/student-diary-subjects.png" alt="показать выбор предмета перед открытием домашнего задания" loading="lazy">
+        </a>
+        <figcaption><code>student-diary-subjects.png</code><br>показать выбор предмета перед открытием домашнего задания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-diary-task.png" target="_blank" rel="noopener">
+          <img src="assets/student-diary-task.png" alt="показать карточку домашнего задания до отметки о выполнении" loading="lazy">
+        </a>
+        <figcaption><code>student-diary-task.png</code><br>показать карточку домашнего задания до отметки о выполнении</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-diary-done.png" target="_blank" rel="noopener">
+          <img src="assets/student-diary-done.png" alt="показать то же задание после завершения" loading="lazy">
+        </a>
+        <figcaption><code>student-diary-done.png</code><br>показать то же задание после завершения</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-grades-subjects.png" target="_blank" rel="noopener">
+          <img src="assets/student-grades-subjects.png" alt="показать выбор предмета перед прогнозом по оценкам" loading="lazy">
+        </a>
+        <figcaption><code>student-grades-subjects.png</code><br>показать выбор предмета перед прогнозом по оценкам</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-grades-result.png" target="_blank" rel="noopener">
+          <img src="assets/student-grades-result.png" alt="показать оценки, средний балл и AI-прогноз" loading="lazy">
+        </a>
+        <figcaption><code>student-grades-result.png</code><br>показать оценки, средний балл и AI-прогноз</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-profile.png" target="_blank" rel="noopener">
+          <img src="assets/student-profile.png" alt="показать профиль и личные показатели" loading="lazy">
+        </a>
+        <figcaption><code>student-profile.png</code><br>показать профиль и личные показатели</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-achievements.png" target="_blank" rel="noopener">
+          <img src="assets/student-achievements.png" alt="показать список достижений" loading="lazy">
+        </a>
+        <figcaption><code>student-achievements.png</code><br>показать список достижений</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-rating.png" target="_blank" rel="noopener">
+          <img src="assets/student-rating.png" alt="показать рейтинг учеников класса" loading="lazy">
+        </a>
+        <figcaption><code>student-rating.png</code><br>показать рейтинг учеников класса</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-class-battle.png" target="_blank" rel="noopener">
+          <img src="assets/student-class-battle.png" alt="показать битву классов" loading="lazy">
+        </a>
+        <figcaption><code>student-class-battle.png</code><br>показать битву классов</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-savings.png" target="_blank" rel="noopener">
+          <img src="assets/student-savings.png" alt="показать копилку и цель класса" loading="lazy">
+        </a>
+        <figcaption><code>student-savings.png</code><br>показать копилку и цель класса</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-ai-start.png" target="_blank" rel="noopener">
+          <img src="assets/student-ai-start.png" alt="показать стартовый экран AI-репетитора" loading="lazy">
+        </a>
+        <figcaption><code>student-ai-start.png</code><br>показать стартовый экран AI-репетитора</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-ai-dialog.png" target="_blank" rel="noopener">
+          <img src="assets/student-ai-dialog.png" alt="показать активный диалог с AI" loading="lazy">
+        </a>
+        <figcaption><code>student-ai-dialog.png</code><br>показать активный диалог с AI</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-pvp-start.png" target="_blank" rel="noopener">
+          <img src="assets/student-pvp-start.png" alt="показать стартовый экран PvP Арены" loading="lazy">
+        </a>
+        <figcaption><code>student-pvp-start.png</code><br>показать стартовый экран PvP Арены</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-pvp-opponent.png" target="_blank" rel="noopener">
+          <img src="assets/student-pvp-opponent.png" alt="показать выбор соперника" loading="lazy">
+        </a>
+        <figcaption><code>student-pvp-opponent.png</code><br>показать выбор соперника</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-pvp-bet.png" target="_blank" rel="noopener">
+          <img src="assets/student-pvp-bet.png" alt="показать выбор ставки" loading="lazy">
+        </a>
+        <figcaption><code>student-pvp-bet.png</code><br>показать выбор ставки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/student-pvp-question.png" target="_blank" rel="noopener">
+          <img src="assets/student-pvp-question.png" alt="показать экран вопроса дуэли" loading="lazy">
+        </a>
+        <figcaption><code>student-pvp-question.png</code><br>показать экран вопроса дуэли</figcaption>
+      </figure>
+    </div>
+    <div class="section-end"><a class="backlink" href="#top">↑ Наверх</a></div>
+  </section>
+
+  <section class="card" id="teacher">
+    <div class="section-label">👩‍🏫 Кабинет учителя</div>
+    <h2>👩‍🏫 Кабинет учителя</h2>
+    <p>Кабинет учителя объединяет все ежедневные рабочие сценарии: выдачу домашнего задания, ведение журнала, объявление для класса, отчеты, проверку выполненных заданий, голосовой ввод оценок и AI-инструменты.</p>
+    <div class="chips">
+      <span class="chip">🏫 Учебный процесс</span>
+      <span class="chip">👮‍♂️ Контроль и Отчеты</span>
+      <span class="chip">🧰 Инструменты и Связь</span>
+      <span class="chip">ℹ️ Инструкция</span>
+    </div>
+    <div class="shot"><strong>Главный экран учителя</strong><div class="gallery">
+      <figure class="figure">
+        <a href="assets/teacher-main.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-main.png" alt="показать главное меню учителя" loading="lazy">
+        </a>
+        <figcaption><code>teacher-main.png</code><br>показать главное меню учителя</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-work-menu.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-work-menu.png" alt="показать содержимое папки `🏫 Учебный процесс`" loading="lazy">
+        </a>
+        <figcaption><code>teacher-work-menu.png</code><br>показать содержимое папки `🏫 Учебный процесс`</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-control-menu.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-control-menu.png" alt="показать раздел `👮‍♂️ Контроль и Отчеты`" loading="lazy">
+        </a>
+        <figcaption><code>teacher-control-menu.png</code><br>показать раздел `👮‍♂️ Контроль и Отчеты`</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-tools-menu.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-tools-menu.png" alt="показать раздел `🧰 Инструменты и Связь`" loading="lazy">
+        </a>
+        <figcaption><code>teacher-tools-menu.png</code><br>показать раздел `🧰 Инструменты и Связь`</figcaption>
+      </figure>
+    </div></div>
+
+    <h3>Главное меню учителя</h3>
+    <div class="table">
+      <div>🏫 Учебный процесс</div><div>Выдача домашнего задания, журнал, расписание классов.</div>
+      <div>👮‍♂️ Контроль и Отчеты</div><div>Проверка домашней работы и формирование Excel-отчетов.</div>
+      <div>🧰 Инструменты и Связь</div><div>Объявления для класса и AI-генерация тестов.</div>
+      <div>ℹ️ Инструкция</div><div>Ссылка на руководство именно для учителя.</div>
+    </div>
+
+    <h3>Раздел «Учебный процесс»</h3>
+    <div class="chips">
+      <span class="chip">📝 Добавить задание</span>
+      <span class="chip">⭐️ Журнал</span>
+      <span class="chip">📅 Расписание классов</span>
+      <span class="chip">🔙 Меню учителя</span>
+    </div>
+
+    <h4>📝 Добавить задание</h4>
+    <ol>
+      <li>Учитель нажимает <code>📝 Добавить задание</code>.</li>
+      <li>Выбирает класс.</li>
+      <li>Выбирает предмет.</li>
+      <li>Отправляет текст задания, фотографию или документ.</li>
+      <li>Бот сохраняет задание и подтверждает успешную запись.</li>
+    </ol>
+    <div class="note">Если вместе с текстом прикрепить фото или документ, бот сохранит и текст, и вложение. Это удобно для карточек, презентаций и сканов страниц.</div>
+
+    <h4>⭐️ Журнал</h4>
+    <ol>
+      <li>Учитель нажимает <code>⭐️ Журнал</code>.</li>
+      <li>Выбирает класс и предмет.</li>
+      <li>Выбирает дату: сегодня, вчера или вводит свою.</li>
+      <li>Выбирает ученика.</li>
+      <li>Ставит оценку от 1 до 10 или вариант <code>❌ Не был (Н)</code>.</li>
+      <li>По желанию добавляет комментарий для родителей.</li>
+      <li>Бот сохраняет оценку, начисляет бонусы ученику, проверяет достижения и уведомляет ученика и родителей.</li>
+    </ol>
+    <div class="warn">
+      <strong>Что важно знать про журнал:</strong>
+      <ul>
+        <li>Комментарий необязателен, но если он есть, сервис может сделать его более корректным и понятным для родителей.</li>
+        <li>После сохранения учитель остается в сценарии выставления оценок и может быстро продолжить работу со следующим учеником.</li>
+        <li>Если учеников в классе нет, бот не даст перейти дальше.</li>
+      </ul>
+    </div>
+    <div class="shot"><strong>Сценарий выставления оценки</strong><div class="gallery">
+      <figure class="figure">
+        <a href="assets/teacher-grade-date.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-date.png" alt="показать выбор даты для оценки" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-date.png</code><br>показать выбор даты для оценки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-student.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-student.png" alt="показать выбор ученика в сценарии журнала" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-student.png</code><br>показать выбор ученика в сценарии журнала</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-value.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-value.png" alt="показать выбор оценки" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-value.png</code><br>показать выбор оценки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-comment.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-comment.png" alt="показать выбор, добавлять ли комментарий" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-comment.png</code><br>показать выбор, добавлять ли комментарий</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-success.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-success.png" alt="показать успешное сохранение оценки" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-success.png</code><br>показать успешное сохранение оценки</figcaption>
+      </figure>
+    </div></div>
+
+    <h4>📅 Расписание классов</h4>
+    <p>Учитель выбирает класс и получает полное недельное расписание. Экран нужен для быстрой сверки занятости без перехода в админский кабинет.</p>
+
+    <h3>Раздел «Контроль и Отчеты»</h3>
+    <div class="chips">
+      <span class="chip">🔍 Проверка ДЗ</span>
+      <span class="chip">📉 Отчеты</span>
+      <span class="chip">🔙 Меню учителя</span>
+    </div>
+
+    <h4>🔍 Проверка ДЗ</h4>
+    <ol>
+      <li>Учитель выбирает класс.</li>
+      <li>Затем выбирает предмет.</li>
+      <li>Бот ищет активные домашние задания и учеников, которые отметили их как выполненные.</li>
+      <li>Появляется режим последовательной проверки.</li>
+      <li>Для каждого ученика доступны два вердикта: <code>✅ Всё верно</code> или <code>💀 ОБМАН!</code>.</li>
+    </ol>
+    <div class="table">
+      <div>✅ Всё верно</div><div>Ученик получает небольшое поощрение XP, а проверка переходит к следующему.</div>
+      <div>💀 ОБМАН!</div><div>Статус выполнения сбрасывается, чтобы ученик не получал выгоду за ложную отметку о сделанном задании.</div>
+    </div>
+
+    <h4>📉 Отчеты</h4>
+    <ol>
+      <li>Учитель выбирает класс.</li>
+      <li>Выбирает месяц.</li>
+      <li>Бот собирает Excel-файл с оценками по дням, средними баллами и отдельным листом комментариев.</li>
+      <li>Готовый файл отправляется прямо в чат Telegram как документ.</li>
+    </ol>
+    <div class="note">Это не просто выгрузка оценок. В отчете есть распределение по предметам, средний балл и отдельная вкладка для комментариев, если они были оставлены при выставлении оценок.</div>
+
+    <h3>Раздел «Инструменты и Связь»</h3>
+    <div class="chips">
+      <span class="chip">📝 Создать тест</span>
+      <span class="chip">📢 Объявление</span>
+      <span class="chip">🔙 Меню учителя</span>
+    </div>
+
+    <h4>📢 Объявление</h4>
+    <ol>
+      <li>Учитель выбирает класс.</li>
+      <li>Пишет текст сообщения или отправляет медиа.</li>
+      <li>Бот автоматически рассылает сообщение ученикам и родителям выбранного класса.</li>
+      <li>После завершения бот показывает, скольким ученикам и родителям удалось доставить сообщение.</li>
+    </ol>
+    <div class="warn">Если кто-то заблокировал бота или не запускал его, сообщение может не дойти. Именно поэтому в финале показывается реальное количество доставок.</div>
+
+    <h4>📝 Создать тест</h4>
+    <p>Это AI-помощник для быстрого создания учебного теста. Учитель вводит тему и класс, после чего бот генерирует набор вопросов с вариантами ответов. Этот режим полезен для быстрых проверочных работ, разминок и подготовки к уроку.</p>
+
+    <h3>Дополнительная функция: голосовой ввод оценок</h3>
+    <p>Учитель может отправить голосовое сообщение. Бот распознает речь, пытается извлечь фамилию ученика, предмет и оценку, а затем сохраняет запись. Если предмет не распознан, бот может взять первый доступный предмет класса. Это режим быстрого ввода, поэтому после внедрения его стоит отдельно показать на примере.</p>
+    <div class="shot"><strong>Голосовой ввод оценок</strong><div class="missing"><strong>Скриншот пока не вставлен:</strong> <code>teacher-voice.png</code>. Остальные сценарии учителя уже встроены ниже в общую галерею.</div></div>
+
+    <h3>Частые ошибки учителя</h3>
+    <div class="faq">
+      <ul>
+        <li><strong>Не появляется список предметов.</strong> Скорее всего, предметы еще не привязаны к классу администратором.</li>
+        <li><strong>Не приходит отчет.</strong> Проверьте, есть ли в выбранном месяце оценки и ученики в классе.</li>
+        <li><strong>Объявление ушло не всем.</strong> Обычно причина в том, что пользователь не запускал бота или запретил ему сообщения.</li>
+        <li><strong>Голосовая оценка сохранилась неверно.</strong> В этом случае стоит использовать обычный журнал и показать учителю шаблон корректной голосовой команды.</li>
+      </ul>
+    </div>
+
+    <h3>Скриншоты кабинета учителя</h3>
+    <p>Это полный комплект доступных экранов учителя: основные меню, журнал, отчеты, объявления, проверка ДЗ и запуск AI-теста.</p>
+<div class="gallery">
+      <figure class="figure">
+        <a href="assets/teacher-main.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-main.png" alt="показать главное меню учителя" loading="lazy">
+        </a>
+        <figcaption><code>teacher-main.png</code><br>показать главное меню учителя</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-work-menu.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-work-menu.png" alt="показать содержимое папки `🏫 Учебный процесс`" loading="lazy">
+        </a>
+        <figcaption><code>teacher-work-menu.png</code><br>показать содержимое папки `🏫 Учебный процесс`</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-add-homework-class.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-add-homework-class.png" alt="показать выбор класса для домашнего задания" loading="lazy">
+        </a>
+        <figcaption><code>teacher-add-homework-class.png</code><br>показать выбор класса для домашнего задания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-add-homework-subject.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-add-homework-subject.png" alt="показать выбор предмета для домашнего задания" loading="lazy">
+        </a>
+        <figcaption><code>teacher-add-homework-subject.png</code><br>показать выбор предмета для домашнего задания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-add-homework-text.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-add-homework-text.png" alt="показать запрос текста задания или фото" loading="lazy">
+        </a>
+        <figcaption><code>teacher-add-homework-text.png</code><br>показать запрос текста задания или фото</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-class.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-class.png" alt="показать выбор класса для журнала" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-class.png</code><br>показать выбор класса для журнала</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-subject.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-subject.png" alt="показать выбор предмета для журнала" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-subject.png</code><br>показать выбор предмета для журнала</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-date.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-date.png" alt="показать выбор даты для оценки" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-date.png</code><br>показать выбор даты для оценки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-student.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-student.png" alt="показать выбор ученика в сценарии журнала" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-student.png</code><br>показать выбор ученика в сценарии журнала</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-value.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-value.png" alt="показать выбор оценки" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-value.png</code><br>показать выбор оценки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-comment.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-comment.png" alt="показать выбор, добавлять ли комментарий" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-comment.png</code><br>показать выбор, добавлять ли комментарий</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-success.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-success.png" alt="показать успешное сохранение оценки" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-success.png</code><br>показать успешное сохранение оценки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-schedule-class.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-schedule-class.png" alt="показать выбор класса для просмотра расписания" loading="lazy">
+        </a>
+        <figcaption><code>teacher-schedule-class.png</code><br>показать выбор класса для просмотра расписания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-schedule-week.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-schedule-week.png" alt="показать недельное расписание класса" loading="lazy">
+        </a>
+        <figcaption><code>teacher-schedule-week.png</code><br>показать недельное расписание класса</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-control-menu.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-control-menu.png" alt="показать раздел `👮‍♂️ Контроль и Отчеты`" loading="lazy">
+        </a>
+        <figcaption><code>teacher-control-menu.png</code><br>показать раздел `👮‍♂️ Контроль и Отчеты`</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-check-hw-class.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-check-hw-class.png" alt="показать выбор класса для проверки домашнего задания" loading="lazy">
+        </a>
+        <figcaption><code>teacher-check-hw-class.png</code><br>показать выбор класса для проверки домашнего задания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-check-hw-subject.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-check-hw-subject.png" alt="показать выбор предмета для проверки домашнего задания" loading="lazy">
+        </a>
+        <figcaption><code>teacher-check-hw-subject.png</code><br>показать выбор предмета для проверки домашнего задания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-check-hw-roulette.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-check-hw-roulette.png" alt="показать экран проверки в режиме «рулетки»" loading="lazy">
+        </a>
+        <figcaption><code>teacher-check-hw-roulette.png</code><br>показать экран проверки в режиме «рулетки»</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-report-class.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-report-class.png" alt="показать выбор класса для отчетов" loading="lazy">
+        </a>
+        <figcaption><code>teacher-report-class.png</code><br>показать выбор класса для отчетов</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-report-month.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-report-month.png" alt="показать выбор месяца для отчетов" loading="lazy">
+        </a>
+        <figcaption><code>teacher-report-month.png</code><br>показать выбор месяца для отчетов</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-tools-menu.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-tools-menu.png" alt="показать раздел `🧰 Инструменты и Связь`" loading="lazy">
+        </a>
+        <figcaption><code>teacher-tools-menu.png</code><br>показать раздел `🧰 Инструменты и Связь`</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-broadcast-class.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-broadcast-class.png" alt="показать выбор класса для объявления" loading="lazy">
+        </a>
+        <figcaption><code>teacher-broadcast-class.png</code><br>показать выбор класса для объявления</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-broadcast-text.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-broadcast-text.png" alt="показать запрос текста объявления" loading="lazy">
+        </a>
+        <figcaption><code>teacher-broadcast-text.png</code><br>показать запрос текста объявления</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-quiz-start.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-quiz-start.png" alt="показать стартовый экран генерации теста" loading="lazy">
+        </a>
+        <figcaption><code>teacher-quiz-start.png</code><br>показать стартовый экран генерации теста</figcaption>
+      </figure>
+    </div>
+    <div class="missing"><strong>Не хватает файлов:</strong> <code>teacher-voice.png</code>. После добавления их можно вставить в этот же раздел без изменения структуры.</div>
+    <div class="section-end"><a class="backlink" href="#top">↑ Наверх</a></div>
+  </section>
+
+  <section class="card" id="parent">
+    <div class="section-label">👨‍👩‍👧 Кабинет родителя</div>
+    <h2>👨‍👩‍👧 Кабинет родителя</h2>
+    <p>Кабинет родителя нужен для наблюдения и мягкого управления: привязать ребенка, смотреть успеваемость, получать AI-анализ недели, ставить цели по оценкам, включать режим тишины на время болезни и при необходимости отвязывать ребенка от профиля.</p>
+    <div class="chips">
+      <span class="chip">📊 Успеваемость</span>
+      <span class="chip">👨‍👩‍👧‍👦 Мои дети</span>
+      <span class="chip">👶 Добавить ребенка</span>
+      <span class="chip">ℹ️ Инструкция</span>
+    </div>
+    <div class="shot"><strong>Главный экран родителя</strong><div class="gallery">
+      <figure class="figure">
+        <a href="assets/parent-main.png" target="_blank" rel="noopener">
+          <img src="assets/parent-main.png" alt="показать главное меню родителя" loading="lazy">
+        </a>
+        <figcaption><code>parent-main.png</code><br>показать главное меню родителя</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-children-list.png" target="_blank" rel="noopener">
+          <img src="assets/parent-children-list.png" alt="показать список в разделе `Мои дети`" loading="lazy">
+        </a>
+        <figcaption><code>parent-children-list.png</code><br>показать список в разделе `Мои дети`</figcaption>
+      </figure>
+    </div></div>
+
+    <h3>Главное меню родителя</h3>
+    <div class="table">
+      <div>👶 Добавить ребенка</div><div>Запускает привязку ученика по его Telegram ID.</div>
+      <div>📊 Успеваемость</div><div>Быстрый доступ к сводке по ребенку: оценки, домашние задания, XP и монеты.</div>
+      <div>👨‍👩‍👧‍👦 Мои дети</div><div>Открывает управление каждым привязанным ребенком: аналитика, цели, статус болезни и отвязка.</div>
+      <div>ℹ️ Инструкция</div><div>Открывает ссылку на руководство для родителей.</div>
+    </div>
+
+    <h3>👶 Добавить ребенка</h3>
+    <ol>
+      <li>Родитель нажимает <code>👶 Добавить ребенка</code>.</li>
+      <li>Бот просит ввести ID ребенка.</li>
+      <li>Родитель вводит числовой ID, который ученик видит в своем профиле.</li>
+      <li>При успешной привязке бот подтверждает, что ребенок добавлен.</li>
+    </ol>
+    <div class="warn">Если введен нечисловой ID или такого ученика нет в системе, бот покажет ошибку. В инструкции важно отдельно показать, где ученик берет свой ID.</div>
+
+    <h3>📊 Успеваемость</h3>
+    <ol>
+      <li>Родитель нажимает <code>📊 Успеваемость</code>.</li>
+      <li>Выбирает одного из привязанных детей.</li>
+      <li>Бот формирует детальную карточку по всем предметам.</li>
+      <li>Внутри карточки отображаются оценки, средний балл, статус домашнего задания, XP, монеты и текущее звание.</li>
+    </ol>
+    <div class="shot"><strong>Успеваемость и цели родителя</strong><div class="gallery">
+      <figure class="figure">
+        <a href="assets/parent-progress.png" target="_blank" rel="noopener">
+          <img src="assets/parent-progress.png" alt="показать подробный отчет по ребенку" loading="lazy">
+        </a>
+        <figcaption><code>parent-progress.png</code><br>показать подробный отчет по ребенку</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-child-manage.png" target="_blank" rel="noopener">
+          <img src="assets/parent-child-manage.png" alt="показать меню управления выбранным ребенком" loading="lazy">
+        </a>
+        <figcaption><code>parent-child-manage.png</code><br>показать меню управления выбранным ребенком</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-goal-subject.png" target="_blank" rel="noopener">
+          <img src="assets/parent-goal-subject.png" alt="показать выбор предмета для цели" loading="lazy">
+        </a>
+        <figcaption><code>parent-goal-subject.png</code><br>показать выбор предмета для цели</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-goal-grade.png" target="_blank" rel="noopener">
+          <img src="assets/parent-goal-grade.png" alt="показать выбор целевой оценки" loading="lazy">
+        </a>
+        <figcaption><code>parent-goal-grade.png</code><br>показать выбор целевой оценки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-goal-reward.png" target="_blank" rel="noopener">
+          <img src="assets/parent-goal-reward.png" alt="показать запрос награды" loading="lazy">
+        </a>
+        <figcaption><code>parent-goal-reward.png</code><br>показать запрос награды</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-goals-list.png" target="_blank" rel="noopener">
+          <img src="assets/parent-goals-list.png" alt="показать список активных целей" loading="lazy">
+        </a>
+        <figcaption><code>parent-goals-list.png</code><br>показать список активных целей</figcaption>
+      </figure>
+    </div></div>
+
+    <h3>👨‍👩‍👧‍👦 Мои дети</h3>
+    <p>Это основной управленческий раздел родителя. После выбора ребенка открывается специальное меню действий.</p>
+    <div class="chips">
+      <span class="chip">📊 Статистика (Цифры)</span>
+      <span class="chip">🤖 AI-Анализ недели</span>
+      <span class="chip">🎯 Поставить цель</span>
+      <span class="chip">📜 Активные цели</span>
+      <span class="chip">🤒 Заболел / Пропуск</span>
+      <span class="chip">❌ Отвязать</span>
+      <span class="chip">🔙 Назад</span>
+    </div>
+    <h4>🤖 AI-Анализ недели</h4>
+    <ol>
+      <li>Родитель выбирает ребенка.</li>
+      <li>Нажимает <code>🤖 AI-Анализ недели</code>.</li>
+      <li>Бот собирает данные за неделю: оценки, пропуски, активность в AI, XP и монеты.</li>
+      <li>После короткой паузы бот выдает структурированный педагогический отчет в уважительном тоне.</li>
+    </ol>
+    <div class="note">Этот отчет полезен не только как сводка, но и как шаблон разговора с ребенком: в нем уже есть сильные стороны, риски и конкретный педагогический совет.</div>
+
+    <h4>🎯 Поставить цель</h4>
+    <ol>
+      <li>Родитель выбирает ребенка.</li>
+      <li>Нажимает <code>🎯 Поставить цель</code>.</li>
+      <li>Выбирает предмет.</li>
+      <li>Выбирает целевую оценку: 8, 9 или 10.</li>
+      <li>Пишет награду в свободной форме: деньги, поездка, подарок, поход в кафе и так далее.</li>
+      <li>Бот сохраняет цель и отправляет уведомление ученику.</li>
+    </ol>
+    <div class="warn">По одному предмету одновременно может быть только одна активная цель. Если цель уже есть, бот предупредит об этом и не создаст дубликат.</div>
+
+    <h4>📜 Активные цели</h4>
+    <p>Раздел показывает уже поставленные цели: предмет, требуемую оценку, награду и имя родителя, который создал цель. Это нужно, чтобы не дублировать обещания и видеть текущую мотивацию ребенка.</p>
+
+    <h4>🤒 Заболел / Пропуск</h4>
+    <ol>
+      <li>Родитель открывает карточку ребенка.</li>
+      <li>Нажимает <code>🤒 Заболел / Пропуск</code>.</li>
+      <li>Выбирает срок: <code>🤒 1 день</code>, <code>🤒 3 дня</code>, <code>🤒 Неделя</code>.</li>
+      <li>Если ребенок вернулся, используется кнопка <code>✅ Выздоровел (Включить)</code>.</li>
+    </ol>
+    <div class="note">Смысл режима в том, чтобы временно не беспокоить уведомлениями. Это не удаляет ребенка и не меняет его оценки, а только влияет на коммуникацию.</div>
+
+    <h4>❌ Отвязать</h4>
+    <p>Отвязка удаляет связь между родителем и выбранным учеником. Если позже нужно будет снова получать данные, ребенка придется привязать заново по его ID.</p>
+
+    <h3>Частые ошибки родителя</h3>
+    <div class="faq">
+      <ul>
+        <li><strong>Не удается добавить ребенка.</strong> Чаще всего введен неверный ID или ребенок еще не зарегистрирован в системе.</li>
+        <li><strong>Нет данных по успеваемости.</strong> У ученика может не быть привязанного класса, предметов или оценок.</li>
+        <li><strong>AI-анализ слишком долго формируется.</strong> Это связано с генерацией текста AI; обычно нужно подождать несколько секунд.</li>
+        <li><strong>Цель не ставится.</strong> Вероятнее всего, по этому предмету уже есть активная цель.</li>
+      </ul>
+    </div>
+
+    <h3>Скриншоты кабинета родителя</h3>
+    <p>Здесь собраны реальные экраны родителя: привязка ребенка, просмотр детей, AI-анализ недели, цели и режим пропуска.</p>
+<div class="gallery">
+      <figure class="figure">
+        <a href="assets/parent-main.png" target="_blank" rel="noopener">
+          <img src="assets/parent-main.png" alt="показать главное меню родителя" loading="lazy">
+        </a>
+        <figcaption><code>parent-main.png</code><br>показать главное меню родителя</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-add-child.png" target="_blank" rel="noopener">
+          <img src="assets/parent-add-child.png" alt="показать запрос ID ребенка" loading="lazy">
+        </a>
+        <figcaption><code>parent-add-child.png</code><br>показать запрос ID ребенка</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-children-pick.png" target="_blank" rel="noopener">
+          <img src="assets/parent-children-pick.png" alt="показать выбор ребенка для просмотра успеваемости" loading="lazy">
+        </a>
+        <figcaption><code>parent-children-pick.png</code><br>показать выбор ребенка для просмотра успеваемости</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-progress.png" target="_blank" rel="noopener">
+          <img src="assets/parent-progress.png" alt="показать подробный отчет по ребенку" loading="lazy">
+        </a>
+        <figcaption><code>parent-progress.png</code><br>показать подробный отчет по ребенку</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-children-list.png" target="_blank" rel="noopener">
+          <img src="assets/parent-children-list.png" alt="показать список в разделе `Мои дети`" loading="lazy">
+        </a>
+        <figcaption><code>parent-children-list.png</code><br>показать список в разделе `Мои дети`</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-child-manage.png" target="_blank" rel="noopener">
+          <img src="assets/parent-child-manage.png" alt="показать меню управления выбранным ребенком" loading="lazy">
+        </a>
+        <figcaption><code>parent-child-manage.png</code><br>показать меню управления выбранным ребенком</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-ai-report.png" target="_blank" rel="noopener">
+          <img src="assets/parent-ai-report.png" alt="показать AI-анализ недели" loading="lazy">
+        </a>
+        <figcaption><code>parent-ai-report.png</code><br>показать AI-анализ недели</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-goal-subject.png" target="_blank" rel="noopener">
+          <img src="assets/parent-goal-subject.png" alt="показать выбор предмета для цели" loading="lazy">
+        </a>
+        <figcaption><code>parent-goal-subject.png</code><br>показать выбор предмета для цели</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-goal-grade.png" target="_blank" rel="noopener">
+          <img src="assets/parent-goal-grade.png" alt="показать выбор целевой оценки" loading="lazy">
+        </a>
+        <figcaption><code>parent-goal-grade.png</code><br>показать выбор целевой оценки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-goal-reward.png" target="_blank" rel="noopener">
+          <img src="assets/parent-goal-reward.png" alt="показать запрос награды" loading="lazy">
+        </a>
+        <figcaption><code>parent-goal-reward.png</code><br>показать запрос награды</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-goals-list.png" target="_blank" rel="noopener">
+          <img src="assets/parent-goals-list.png" alt="показать список активных целей" loading="lazy">
+        </a>
+        <figcaption><code>parent-goals-list.png</code><br>показать список активных целей</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-sick-menu.png" target="_blank" rel="noopener">
+          <img src="assets/parent-sick-menu.png" alt="показать выбор срока болезни или пропуска" loading="lazy">
+        </a>
+        <figcaption><code>parent-sick-menu.png</code><br>показать выбор срока болезни или пропуска</figcaption>
+      </figure>
+    </div>
+    <div class="section-end"><a class="backlink" href="#top">↑ Наверх</a></div>
+  </section>
+
+  <section class="card" id="admin">
+    <div class="section-label">🛠 Кабинет администратора</div>
+    <h2>🛠 Кабинет администратора</h2>
+    <p>Кабинет администратора управляет структурой всей школы: пользователями, предметами, классами, расписанием, магазином, AI-контролем, общими рассылками и режимом каникул. Это самый чувствительный кабинет, поэтому доступ к нему должен быть только у владельца <code>ADMIN_ID</code>.</p>
+    <div class="chips">
+      <span class="chip">🔧 Админ-панель</span>
+      <span class="chip">📢 Рассылка</span>
+      <span class="chip">🛑 Режим каникул</span>
+      <span class="chip">ℹ️ Инструкция</span>
+    </div>
+    <div class="shot"><strong>Главный экран администратора</strong><div class="gallery">
+      <figure class="figure">
+        <a href="assets/admin-main.png" target="_blank" rel="noopener">
+          <img src="assets/admin-main.png" alt="показать главное меню администратора" loading="lazy">
+        </a>
+        <figcaption><code>admin-main.png</code><br>показать главное меню администратора</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-panel.png" target="_blank" rel="noopener">
+          <img src="assets/admin-panel.png" alt="показать полную inline-админку" loading="lazy">
+        </a>
+        <figcaption><code>admin-panel.png</code><br>показать полную inline-админку</figcaption>
+      </figure>
+    </div></div>
+
+    <h3>Безопасность администратора</h3>
+    <div class="warn">
+      <ul>
+        <li>В админский кабинет должен попадать только пользователь с заранее заданным <code>ADMIN_ID</code>.</li>
+        <li>Даже если кто-то узнает регистрационный код роли администратора, сам кабинет не должен открываться постороннему пользователю.</li>
+        <li>Сервисная команда сброса должна оставаться скрытой и использовать секретный суффикс, например <code>/reset_секрет</code>.</li>
+      </ul>
+    </div>
+
+    <h3>Что находится в админ-панели</h3>
+    <div class="chips">
+      <span class="chip">👥 Пользователи</span>
+      <span class="chip">📅 Расписание классов</span>
+      <span class="chip">🧠 AI-Контроль</span>
+      <span class="chip">🎯 Цели класса</span>
+      <span class="chip">🗓 Настроить расписание</span>
+      <span class="chip">🏫 Добавить класс</span>
+      <span class="chip">📚 Добавить предмет</span>
+      <span class="chip">🔗 Привязать предмет</span>
+      <span class="chip">🏪 Товары магазина</span>
+    </div>
+
+    <h4>👥 Пользователи</h4>
+    <ol>
+      <li>Администратор открывает раздел управления пользователями.</li>
+      <li>Выбирает, кого хочет перевести обратно в гостя: учителя, родителя или ученика.</li>
+      <li>Для учеников сначала выбирается класс, затем конкретный ребенок.</li>
+      <li>После подтверждения роль пользователя сбрасывается до гостя.</li>
+    </ol>
+    <div class="note">Это не удаление Telegram-аккаунта, а сброс роли внутри бота. Пользователь сможет снова зарегистрироваться по нужной роли.</div>
+
+    <h4>🧠 AI-Контроль</h4>
+    <ol>
+      <li>Раздел <code>Пульс школы</code> показывает последние AI-запросы учеников в реальном времени с пагинацией.</li>
+      <li>Раздел <code>Поиск по ученику</code> позволяет выбрать класс, затем ученика и посмотреть его AI-историю.</li>
+      <li>Раздел очистки полностью удаляет историю AI-запросов после отдельного подтверждения.</li>
+    </ol>
+    <div class="warn">Очистка AI-истории необратима. Эту кнопку нужно описывать в инструкции отдельно и очень явно.</div>
+
+    <h4>🏪 Товары магазина</h4>
+    <ol>
+      <li>Администратор открывает магазин.</li>
+      <li>Для добавления товара вводит название, цену и фотографию.</li>
+      <li>Если фото не нужно, вместо него можно отправить <code>-</code>.</li>
+      <li>Для удаления выбирает товар из списка.</li>
+    </ol>
+
+    <h4>🏫 Добавить класс, 📚 Добавить предмет, 🔗 Привязать предмет</h4>
+    <p>Это базовый блок настройки школы. Сначала создаются классы и предметы, затем предметы привязываются к конкретным классам. Пока привязки нет, учитель и ученик не увидят этот предмет в своих сценариях.</p>
+
+    <h4>📅 Расписание классов</h4>
+    <p>Раздел показывает уже готовое недельное расписание выбранного класса. Это режим просмотра, без редактирования.</p>
+
+    <h4>🗓 Настроить расписание</h4>
+    <ol>
+      <li>Администратор выбирает класс.</li>
+      <li>Выбирает день недели.</li>
+      <li>Далее работает в одном из двух режимов.</li>
+    </ol>
+    <div class="table">
+      <div>Ручной режим</div><div>Выбрать номер урока, затем выбрать предмет и сохранить слот.</div>
+      <div>Быстрый режим</div><div>Находясь в состоянии выбора урока, отправить сообщением список предметов через запятую. Бот постарается сам сопоставить их с базой и создать расписание блоком.</div>
+    </div>
+    <div class="shot"><strong>Настройка расписания администратором</strong><div class="gallery">
+      <figure class="figure">
+        <a href="assets/admin-schedule-setup-class.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-setup-class.png" alt="показать выбор класса для настройки расписания" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-setup-class.png</code><br>показать выбор класса для настройки расписания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-setup-day.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-setup-day.png" alt="показать выбор дня недели для настройки расписания" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-setup-day.png</code><br>показать выбор дня недели для настройки расписания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-setup-lesson.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-setup-lesson.png" alt="показать выбор урока или состояние быстрого ввода" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-setup-lesson.png</code><br>показать выбор урока или состояние быстрого ввода</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-setup-subject.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-setup-subject.png" alt="показать выбор предмета в ручной настройке расписания" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-setup-subject.png</code><br>показать выбор предмета в ручной настройке расписания</figcaption>
+      </figure>
+    </div></div>
+
+    <h4>📢 Рассылка</h4>
+    <ol>
+      <li>Администратор нажимает <code>📢 Рассылка</code>.</li>
+      <li>Выбирает аудиторию: учителя, родители, ученики или все сразу.</li>
+      <li>Отправляет текст, фото, документ или иной поддерживаемый контент.</li>
+      <li>Бот рассылает сообщение и показывает итоговую статистику доставки.</li>
+    </ol>
+
+    <h4>🛑 Режим каникул</h4>
+    <ol>
+      <li>Администратор открывает раздел каникул.</li>
+      <li>Если каникулы не включены, бот показывает обычный рабочий режим.</li>
+      <li>Для включения вводится дата окончания в формате <code>ДД.ММ</code>.</li>
+      <li>Для выключения используется отдельная кнопка остановки режима.</li>
+    </ol>
+    <div class="note">Режим каникул особенно важен для напоминаний и школьной коммуникации. Его полезно описать в инструкции как организационный, а не декоративный режим.</div>
+
+    <h4>🎯 Цели класса</h4>
+    <ol>
+      <li>Администратор выбирает класс.</li>
+      <li>Вводит название цели, например поездка, техника, экскурсия или подарок.</li>
+      <li>Вводит требуемую сумму.</li>
+      <li>Добавляет фото или отправляет <code>-</code>, если фото не нужно.</li>
+      <li>После этого ученики видят цель в разделе <code>💰 Копилка</code>.</li>
+    </ol>
+    <div class="warn">В один момент времени у класса должна быть только одна активная цель. Именно на эту механику завязаны ученические пожертвования монет.</div>
+
+    <h3>Частые ошибки администратора</h3>
+    <div class="faq">
+      <ul>
+        <li><strong>Учитель не видит предмет.</strong> Предмет создан, но не привязан к классу.</li>
+        <li><strong>Ученик не видит расписание.</strong> Либо расписание не настроено, либо ученик не привязан к классу.</li>
+        <li><strong>Рассылка доставилась не всем.</strong> Некоторые пользователи не открывали чат с ботом или заблокировали его.</li>
+        <li><strong>В AI-контроле пусто.</strong> Значит, запросов пока не было либо история уже очищена.</li>
+      </ul>
+    </div>
+
+    <h3>Скриншоты кабинета администратора</h3>
+    <p>Ниже встроены реальные экраны администратора: доступ в панель, пользователи, AI-контроль, магазин, расписание, цели, каникулы и рассылка.</p>
+<div class="gallery">
+      <figure class="figure">
+        <a href="assets/admin-main.png" target="_blank" rel="noopener">
+          <img src="assets/admin-main.png" alt="показать главное меню администратора" loading="lazy">
+        </a>
+        <figcaption><code>admin-main.png</code><br>показать главное меню администратора</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-panel.png" target="_blank" rel="noopener">
+          <img src="assets/admin-panel.png" alt="показать полную inline-админку" loading="lazy">
+        </a>
+        <figcaption><code>admin-panel.png</code><br>показать полную inline-админку</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-users-menu.png" target="_blank" rel="noopener">
+          <img src="assets/admin-users-menu.png" alt="показать выбор роли в управлении пользователями" loading="lazy">
+        </a>
+        <figcaption><code>admin-users-menu.png</code><br>показать выбор роли в управлении пользователями</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-users-student-class.png" target="_blank" rel="noopener">
+          <img src="assets/admin-users-student-class.png" alt="показать выбор класса перед сбросом роли ученика" loading="lazy">
+        </a>
+        <figcaption><code>admin-users-student-class.png</code><br>показать выбор класса перед сбросом роли ученика</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-users-student-pick.png" target="_blank" rel="noopener">
+          <img src="assets/admin-users-student-pick.png" alt="показать список учеников для выбора" loading="lazy">
+        </a>
+        <figcaption><code>admin-users-student-pick.png</code><br>показать список учеников для выбора</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-ai-menu.png" target="_blank" rel="noopener">
+          <img src="assets/admin-ai-menu.png" alt="показать главное меню AI-контроля" loading="lazy">
+        </a>
+        <figcaption><code>admin-ai-menu.png</code><br>показать главное меню AI-контроля</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-ai-pulse.png" target="_blank" rel="noopener">
+          <img src="assets/admin-ai-pulse.png" alt="показать «пульс школы» с последними запросами" loading="lazy">
+        </a>
+        <figcaption><code>admin-ai-pulse.png</code><br>показать «пульс школы» с последними запросами</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-ai-class-pick.png" target="_blank" rel="noopener">
+          <img src="assets/admin-ai-class-pick.png" alt="показать выбор класса для поиска AI-истории" loading="lazy">
+        </a>
+        <figcaption><code>admin-ai-class-pick.png</code><br>показать выбор класса для поиска AI-истории</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-ai-student-pick.png" target="_blank" rel="noopener">
+          <img src="assets/admin-ai-student-pick.png" alt="показать выбор ученика для AI-истории" loading="lazy">
+        </a>
+        <figcaption><code>admin-ai-student-pick.png</code><br>показать выбор ученика для AI-истории</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-ai-history.png" target="_blank" rel="noopener">
+          <img src="assets/admin-ai-history.png" alt="показать историю AI одного ученика с пагинацией" loading="lazy">
+        </a>
+        <figcaption><code>admin-ai-history.png</code><br>показать историю AI одного ученика с пагинацией</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-ai-clear-warning.png" target="_blank" rel="noopener">
+          <img src="assets/admin-ai-clear-warning.png" alt="показать предупреждение перед очисткой AI-истории" loading="lazy">
+        </a>
+        <figcaption><code>admin-ai-clear-warning.png</code><br>показать предупреждение перед очисткой AI-истории</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-shop-menu.png" target="_blank" rel="noopener">
+          <img src="assets/admin-shop-menu.png" alt="показать меню управления магазином" loading="lazy">
+        </a>
+        <figcaption><code>admin-shop-menu.png</code><br>показать меню управления магазином</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-shop-add-name.png" target="_blank" rel="noopener">
+          <img src="assets/admin-shop-add-name.png" alt="показать запрос названия товара" loading="lazy">
+        </a>
+        <figcaption><code>admin-shop-add-name.png</code><br>показать запрос названия товара</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-shop-add-price.png" target="_blank" rel="noopener">
+          <img src="assets/admin-shop-add-price.png" alt="показать запрос цены товара" loading="lazy">
+        </a>
+        <figcaption><code>admin-shop-add-price.png</code><br>показать запрос цены товара</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-shop-add-photo.png" target="_blank" rel="noopener">
+          <img src="assets/admin-shop-add-photo.png" alt="показать запрос фото товара или символа `-`" loading="lazy">
+        </a>
+        <figcaption><code>admin-shop-add-photo.png</code><br>показать запрос фото товара или символа `-`</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-shop-delete-list.png" target="_blank" rel="noopener">
+          <img src="assets/admin-shop-delete-list.png" alt="показать список удаления товаров" loading="lazy">
+        </a>
+        <figcaption><code>admin-shop-delete-list.png</code><br>показать список удаления товаров</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-add-class.png" target="_blank" rel="noopener">
+          <img src="assets/admin-add-class.png" alt="показать запрос добавления нового класса" loading="lazy">
+        </a>
+        <figcaption><code>admin-add-class.png</code><br>показать запрос добавления нового класса</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-add-subject.png" target="_blank" rel="noopener">
+          <img src="assets/admin-add-subject.png" alt="показать запрос добавления нового предмета" loading="lazy">
+        </a>
+        <figcaption><code>admin-add-subject.png</code><br>показать запрос добавления нового предмета</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-link-class.png" target="_blank" rel="noopener">
+          <img src="assets/admin-link-class.png" alt="показать выбор класса перед привязкой предмета" loading="lazy">
+        </a>
+        <figcaption><code>admin-link-class.png</code><br>показать выбор класса перед привязкой предмета</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-link-subject.png" target="_blank" rel="noopener">
+          <img src="assets/admin-link-subject.png" alt="показать выбор предмета перед привязкой" loading="lazy">
+        </a>
+        <figcaption><code>admin-link-subject.png</code><br>показать выбор предмета перед привязкой</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-view-class.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-view-class.png" alt="показать выбор класса для просмотра расписания" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-view-class.png</code><br>показать выбор класса для просмотра расписания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-view-week.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-view-week.png" alt="показать недельное расписание класса" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-view-week.png</code><br>показать недельное расписание класса</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-setup-class.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-setup-class.png" alt="показать выбор класса для настройки расписания" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-setup-class.png</code><br>показать выбор класса для настройки расписания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-setup-day.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-setup-day.png" alt="показать выбор дня недели для настройки расписания" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-setup-day.png</code><br>показать выбор дня недели для настройки расписания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-setup-lesson.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-setup-lesson.png" alt="показать выбор урока или состояние быстрого ввода" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-setup-lesson.png</code><br>показать выбор урока или состояние быстрого ввода</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-setup-subject.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-setup-subject.png" alt="показать выбор предмета в ручной настройке расписания" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-setup-subject.png</code><br>показать выбор предмета в ручной настройке расписания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-broadcast-audience.png" target="_blank" rel="noopener">
+          <img src="assets/admin-broadcast-audience.png" alt="показать выбор аудитории для рассылки" loading="lazy">
+        </a>
+        <figcaption><code>admin-broadcast-audience.png</code><br>показать выбор аудитории для рассылки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-broadcast-text.png" target="_blank" rel="noopener">
+          <img src="assets/admin-broadcast-text.png" alt="показать запрос текста рассылки" loading="lazy">
+        </a>
+        <figcaption><code>admin-broadcast-text.png</code><br>показать запрос текста рассылки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-holiday-menu.png" target="_blank" rel="noopener">
+          <img src="assets/admin-holiday-menu.png" alt="показать меню режима каникул с текущим статусом" loading="lazy">
+        </a>
+        <figcaption><code>admin-holiday-menu.png</code><br>показать меню режима каникул с текущим статусом</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-holiday-date.png" target="_blank" rel="noopener">
+          <img src="assets/admin-holiday-date.png" alt="показать запрос даты окончания каникул" loading="lazy">
+        </a>
+        <figcaption><code>admin-holiday-date.png</code><br>показать запрос даты окончания каникул</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-goal-class.png" target="_blank" rel="noopener">
+          <img src="assets/admin-goal-class.png" alt="показать выбор класса для цели класса" loading="lazy">
+        </a>
+        <figcaption><code>admin-goal-class.png</code><br>показать выбор класса для цели класса</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-goal-title.png" target="_blank" rel="noopener">
+          <img src="assets/admin-goal-title.png" alt="показать запрос названия цели" loading="lazy">
+        </a>
+        <figcaption><code>admin-goal-title.png</code><br>показать запрос названия цели</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-goal-amount.png" target="_blank" rel="noopener">
+          <img src="assets/admin-goal-amount.png" alt="показать запрос целевой суммы" loading="lazy">
+        </a>
+        <figcaption><code>admin-goal-amount.png</code><br>показать запрос целевой суммы</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-goal-photo.png" target="_blank" rel="noopener">
+          <img src="assets/admin-goal-photo.png" alt="показать запрос фото цели или символа `-`" loading="lazy">
+        </a>
+        <figcaption><code>admin-goal-photo.png</code><br>показать запрос фото цели или символа `-`</figcaption>
+      </figure>
+    </div>
+    <div class="section-end"><a class="backlink" href="#top">↑ Наверх</a></div>
+  </section>
+</div>
+</body>
+</html>
+
+
+

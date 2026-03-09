@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Инструкция для администратора | School Bot</title>
+<style>
+:root{
+  --bg:#f6efe4;
+  --paper:#fffdf8;
+  --line:#ddd1bd;
+  --text:#1f2d3a;
+  --muted:#5d6873;
+  --accent:#0f766e;
+  --accent-strong:#0a5a53;
+  --accent-soft:#e2f5f2;
+  --warn:#fff1d9;
+  --warn-line:#d98a43;
+  --dark:#172431;
+  --shadow:0 12px 40px rgba(23,36,49,.08);
+  --shadow-soft:0 8px 24px rgba(23,36,49,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at top left,#fffdf8 0,#f6efe4 42%,#efe4d2 100%);color:var(--text);font-family:"Trebuchet MS","Segoe UI",sans-serif;line-height:1.6}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:24px}
+.topbar{position:sticky;top:12px;z-index:30;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 18px;margin-bottom:18px;background:rgba(255,253,248,.84);backdrop-filter:blur(14px);border:1px solid rgba(221,209,189,.9);border-radius:20px;box-shadow:var(--shadow-soft)}
+.brand{font-weight:800;letter-spacing:.02em}
+.topnav{display:flex;flex-wrap:wrap;gap:8px}
+.topnav a{padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);text-decoration:none;font-size:14px;font-weight:700}
+.topnav a:hover{border-color:var(--accent);color:var(--accent)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#fffdf8 0,#e7f4f7 52%,#f8eadf 100%)}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:999px;opacity:.38;pointer-events:none}
+.hero:before{width:320px;height:320px;right:-110px;top:-120px;background:radial-gradient(circle,#d8f0ea 0,rgba(216,240,234,0) 70%)}
+.hero:after{width:280px;height:280px;left:-90px;bottom:-150px;background:radial-gradient(circle,#f9d9c8 0,rgba(249,217,200,0) 72%)}
+.hero>*{position:relative}
+h1,h2,h3,h4{margin:0 0 12px;color:var(--text)}
+h1{font-size:46px;line-height:1.04;max-width:760px}
+h2{font-size:30px;padding-top:6px}
+h3{font-size:22px;margin-top:18px}
+h4{font-size:18px;margin-top:14px}
+.lead{font-size:18px;max-width:820px}
+p,li{color:var(--muted)}
+ul,ol{margin:10px 0 0 22px;padding:0}
+.chips,.hero-actions,.kpis{display:flex;flex-wrap:wrap;gap:10px}
+.kpi{flex:1 1 180px;min-width:180px;padding:16px 18px;border-radius:20px;background:rgba(255,255,255,.7);border:1px solid rgba(221,209,189,.85);box-shadow:var(--shadow-soft)}
+.kpi strong{display:block;font-size:28px;line-height:1;color:var(--accent-strong);margin-bottom:6px}
+.pill,.chip{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;text-decoration:none;font-weight:700}
+.pill{background:#fff;border:1px solid var(--line)}
+.pill:hover{border-color:var(--accent);color:var(--accent)}
+.chip{background:var(--accent-soft);color:var(--accent);font-size:14px}
+.section-label{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-strong)}
+.note,.warn,.shot,.stepbox,.faq{border-radius:18px;padding:18px;margin-top:14px}
+.note{background:#eef6f8;border:1px solid #c9e4e8}
+.warn{background:var(--warn);border-left:6px solid var(--warn-line)}
+.shot{background:#fcfaf5;border:2px dashed var(--line);color:var(--muted)}
+.stepbox{background:#f9f6ef;border:1px solid var(--line)}
+.faq{background:#f4f8fb;border:1px solid #d9e8ee}
+.table{display:grid;grid-template-columns:220px 1fr;gap:10px 16px;margin-top:16px}
+.table div{padding:10px 12px;border-radius:14px;background:#faf7f1}
+.table div:nth-child(odd){font-weight:700;color:var(--text)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:16px}
+.figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:0 6px 18px rgba(23,36,49,.05);transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease}
+.figure:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(23,36,49,.09);border-color:#cdbca0}
+.figure a{display:block;text-decoration:none}
+.figure img{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;border-radius:12px;border:1px solid var(--line);background:#fff}
+.figure figcaption{margin-top:10px;color:var(--muted);font-size:14px}
+.missing{margin-top:14px;padding:14px 16px;border-radius:16px;background:#fff7ed;border:1px solid #f1c27d;color:#8a4b12}
+.section-end{display:flex;justify-content:flex-end;margin-top:18px}
+.backlink{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);text-decoration:none;font-weight:700;font-size:14px}
+.backlink:hover{border-color:var(--accent);color:var(--accent)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+code{background:#ecf4f6;padding:2px 7px;border-radius:8px}
+@media (max-width:900px){
+  .topbar{top:8px;flex-direction:column;align-items:flex-start}
+}
+@media (max-width:740px){
+  .wrap{padding:14px}
+  .card{padding:20px;border-radius:22px}
+  h1{font-size:34px}
+  h2{font-size:26px}
+  .table{grid-template-columns:1fr}
+  .kpi{min-width:unset;flex:1 1 100%}
+  .figure img{aspect-ratio:auto}
+}
+@media print{
+  body{background:#fff}
+  .topbar,.backlink{display:none !important}
+  .card{box-shadow:none;page-break-inside:avoid}
+  .figure{box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar" id="top">
+    <div class="brand">School Bot Guide</div>
+  </div>
+  <section class="card hero">
+    <div class="section-label">🛠 Только кабинет администратора</div>
+    <h1>Инструкция для администратора</h1>
+    <p class="lead">Полная инструкция по управлению пользователями, расписанием, AI-контролем, рассылками, магазином и целями.</p>
+    <div class="hero-actions">
+      <a class="pill" href="#admin">Перейти к инструкции</a>
+    </div>
+  </section>
+
+  <section class="card" id="admin">
+    <div class="section-label">🛠 Кабинет администратора</div>
+    <h2>🛠 Кабинет администратора</h2>
+    <p>Кабинет администратора управляет структурой всей школы: пользователями, предметами, классами, расписанием, магазином, AI-контролем, общими рассылками и режимом каникул. Это самый чувствительный кабинет, поэтому доступ к нему должен быть только у владельца <code>ADMIN_ID</code>.</p>
+    <div class="chips">
+      <span class="chip">🔧 Админ-панель</span>
+      <span class="chip">📢 Рассылка</span>
+      <span class="chip">🛑 Режим каникул</span>
+      <span class="chip">ℹ️ Инструкция</span>
+    </div>
+    <div class="shot"><strong>Главный экран администратора</strong><div class="gallery">
+      <figure class="figure">
+        <a href="assets/admin-main.png" target="_blank" rel="noopener">
+          <img src="assets/admin-main.png" alt="показать главное меню администратора" loading="lazy">
+        </a>
+        <figcaption><code>admin-main.png</code><br>показать главное меню администратора</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-panel.png" target="_blank" rel="noopener">
+          <img src="assets/admin-panel.png" alt="показать полную inline-админку" loading="lazy">
+        </a>
+        <figcaption><code>admin-panel.png</code><br>показать полную inline-админку</figcaption>
+      </figure>
+    </div></div>
+
+    <h3>Безопасность администратора</h3>
+    <div class="warn">
+      <ul>
+        <li>В админский кабинет должен попадать только пользователь с заранее заданным <code>ADMIN_ID</code>.</li>
+        <li>Даже если кто-то узнает регистрационный код роли администратора, сам кабинет не должен открываться постороннему пользователю.</li>
+        <li>Сервисная команда сброса должна оставаться скрытой и использовать секретный суффикс, например <code>/reset_секрет</code>.</li>
+      </ul>
+    </div>
+
+    <h3>Что находится в админ-панели</h3>
+    <div class="chips">
+      <span class="chip">👥 Пользователи</span>
+      <span class="chip">📅 Расписание классов</span>
+      <span class="chip">🧠 AI-Контроль</span>
+      <span class="chip">🎯 Цели класса</span>
+      <span class="chip">🗓 Настроить расписание</span>
+      <span class="chip">🏫 Добавить класс</span>
+      <span class="chip">📚 Добавить предмет</span>
+      <span class="chip">🔗 Привязать предмет</span>
+      <span class="chip">🏪 Товары магазина</span>
+    </div>
+
+    <h4>👥 Пользователи</h4>
+    <ol>
+      <li>Администратор открывает раздел управления пользователями.</li>
+      <li>Выбирает, кого хочет перевести обратно в гостя: учителя, родителя или ученика.</li>
+      <li>Для учеников сначала выбирается класс, затем конкретный ребенок.</li>
+      <li>После подтверждения роль пользователя сбрасывается до гостя.</li>
+    </ol>
+    <div class="note">Это не удаление Telegram-аккаунта, а сброс роли внутри бота. Пользователь сможет снова зарегистрироваться по нужной роли.</div>
+
+    <h4>🧠 AI-Контроль</h4>
+    <ol>
+      <li>Раздел <code>Пульс школы</code> показывает последние AI-запросы учеников в реальном времени с пагинацией.</li>
+      <li>Раздел <code>Поиск по ученику</code> позволяет выбрать класс, затем ученика и посмотреть его AI-историю.</li>
+      <li>Раздел очистки полностью удаляет историю AI-запросов после отдельного подтверждения.</li>
+    </ol>
+    <div class="warn">Очистка AI-истории необратима. Эту кнопку нужно описывать в инструкции отдельно и очень явно.</div>
+
+    <h4>🏪 Товары магазина</h4>
+    <ol>
+      <li>Администратор открывает магазин.</li>
+      <li>Для добавления товара вводит название, цену и фотографию.</li>
+      <li>Если фото не нужно, вместо него можно отправить <code>-</code>.</li>
+      <li>Для удаления выбирает товар из списка.</li>
+    </ol>
+
+    <h4>🏫 Добавить класс, 📚 Добавить предмет, 🔗 Привязать предмет</h4>
+    <p>Это базовый блок настройки школы. Сначала создаются классы и предметы, затем предметы привязываются к конкретным классам. Пока привязки нет, учитель и ученик не увидят этот предмет в своих сценариях.</p>
+
+    <h4>📅 Расписание классов</h4>
+    <p>Раздел показывает уже готовое недельное расписание выбранного класса. Это режим просмотра, без редактирования.</p>
+
+    <h4>🗓 Настроить расписание</h4>
+    <ol>
+      <li>Администратор выбирает класс.</li>
+      <li>Выбирает день недели.</li>
+      <li>Далее работает в одном из двух режимов.</li>
+    </ol>
+    <div class="table">
+      <div>Ручной режим</div><div>Выбрать номер урока, затем выбрать предмет и сохранить слот.</div>
+      <div>Быстрый режим</div><div>Находясь в состоянии выбора урока, отправить сообщением список предметов через запятую. Бот постарается сам сопоставить их с базой и создать расписание блоком.</div>
+    </div>
+    <div class="shot"><strong>Настройка расписания администратором</strong><div class="gallery">
+      <figure class="figure">
+        <a href="assets/admin-schedule-setup-class.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-setup-class.png" alt="показать выбор класса для настройки расписания" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-setup-class.png</code><br>показать выбор класса для настройки расписания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-setup-day.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-setup-day.png" alt="показать выбор дня недели для настройки расписания" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-setup-day.png</code><br>показать выбор дня недели для настройки расписания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-setup-lesson.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-setup-lesson.png" alt="показать выбор урока или состояние быстрого ввода" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-setup-lesson.png</code><br>показать выбор урока или состояние быстрого ввода</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-setup-subject.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-setup-subject.png" alt="показать выбор предмета в ручной настройке расписания" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-setup-subject.png</code><br>показать выбор предмета в ручной настройке расписания</figcaption>
+      </figure>
+    </div></div>
+
+    <h4>📢 Рассылка</h4>
+    <ol>
+      <li>Администратор нажимает <code>📢 Рассылка</code>.</li>
+      <li>Выбирает аудиторию: учителя, родители, ученики или все сразу.</li>
+      <li>Отправляет текст, фото, документ или иной поддерживаемый контент.</li>
+      <li>Бот рассылает сообщение и показывает итоговую статистику доставки.</li>
+    </ol>
+
+    <h4>🛑 Режим каникул</h4>
+    <ol>
+      <li>Администратор открывает раздел каникул.</li>
+      <li>Если каникулы не включены, бот показывает обычный рабочий режим.</li>
+      <li>Для включения вводится дата окончания в формате <code>ДД.ММ</code>.</li>
+      <li>Для выключения используется отдельная кнопка остановки режима.</li>
+    </ol>
+    <div class="note">Режим каникул особенно важен для напоминаний и школьной коммуникации. Его полезно описать в инструкции как организационный, а не декоративный режим.</div>
+
+    <h4>🎯 Цели класса</h4>
+    <ol>
+      <li>Администратор выбирает класс.</li>
+      <li>Вводит название цели, например поездка, техника, экскурсия или подарок.</li>
+      <li>Вводит требуемую сумму.</li>
+      <li>Добавляет фото или отправляет <code>-</code>, если фото не нужно.</li>
+      <li>После этого ученики видят цель в разделе <code>💰 Копилка</code>.</li>
+    </ol>
+    <div class="warn">В один момент времени у класса должна быть только одна активная цель. Именно на эту механику завязаны ученические пожертвования монет.</div>
+
+    <h3>Частые ошибки администратора</h3>
+    <div class="faq">
+      <ul>
+        <li><strong>Учитель не видит предмет.</strong> Предмет создан, но не привязан к классу.</li>
+        <li><strong>Ученик не видит расписание.</strong> Либо расписание не настроено, либо ученик не привязан к классу.</li>
+        <li><strong>Рассылка доставилась не всем.</strong> Некоторые пользователи не открывали чат с ботом или заблокировали его.</li>
+        <li><strong>В AI-контроле пусто.</strong> Значит, запросов пока не было либо история уже очищена.</li>
+      </ul>
+    </div>
+
+    <h3>Скриншоты кабинета администратора</h3>
+    <p>Ниже встроены реальные экраны администратора: доступ в панель, пользователи, AI-контроль, магазин, расписание, цели, каникулы и рассылка.</p>
+<div class="gallery">
+      <figure class="figure">
+        <a href="assets/admin-main.png" target="_blank" rel="noopener">
+          <img src="assets/admin-main.png" alt="показать главное меню администратора" loading="lazy">
+        </a>
+        <figcaption><code>admin-main.png</code><br>показать главное меню администратора</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-panel.png" target="_blank" rel="noopener">
+          <img src="assets/admin-panel.png" alt="показать полную inline-админку" loading="lazy">
+        </a>
+        <figcaption><code>admin-panel.png</code><br>показать полную inline-админку</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-users-menu.png" target="_blank" rel="noopener">
+          <img src="assets/admin-users-menu.png" alt="показать выбор роли в управлении пользователями" loading="lazy">
+        </a>
+        <figcaption><code>admin-users-menu.png</code><br>показать выбор роли в управлении пользователями</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-users-student-class.png" target="_blank" rel="noopener">
+          <img src="assets/admin-users-student-class.png" alt="показать выбор класса перед сбросом роли ученика" loading="lazy">
+        </a>
+        <figcaption><code>admin-users-student-class.png</code><br>показать выбор класса перед сбросом роли ученика</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-users-student-pick.png" target="_blank" rel="noopener">
+          <img src="assets/admin-users-student-pick.png" alt="показать список учеников для выбора" loading="lazy">
+        </a>
+        <figcaption><code>admin-users-student-pick.png</code><br>показать список учеников для выбора</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-ai-menu.png" target="_blank" rel="noopener">
+          <img src="assets/admin-ai-menu.png" alt="показать главное меню AI-контроля" loading="lazy">
+        </a>
+        <figcaption><code>admin-ai-menu.png</code><br>показать главное меню AI-контроля</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-ai-pulse.png" target="_blank" rel="noopener">
+          <img src="assets/admin-ai-pulse.png" alt="показать «пульс школы» с последними запросами" loading="lazy">
+        </a>
+        <figcaption><code>admin-ai-pulse.png</code><br>показать «пульс школы» с последними запросами</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-ai-class-pick.png" target="_blank" rel="noopener">
+          <img src="assets/admin-ai-class-pick.png" alt="показать выбор класса для поиска AI-истории" loading="lazy">
+        </a>
+        <figcaption><code>admin-ai-class-pick.png</code><br>показать выбор класса для поиска AI-истории</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-ai-student-pick.png" target="_blank" rel="noopener">
+          <img src="assets/admin-ai-student-pick.png" alt="показать выбор ученика для AI-истории" loading="lazy">
+        </a>
+        <figcaption><code>admin-ai-student-pick.png</code><br>показать выбор ученика для AI-истории</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-ai-history.png" target="_blank" rel="noopener">
+          <img src="assets/admin-ai-history.png" alt="показать историю AI одного ученика с пагинацией" loading="lazy">
+        </a>
+        <figcaption><code>admin-ai-history.png</code><br>показать историю AI одного ученика с пагинацией</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-ai-clear-warning.png" target="_blank" rel="noopener">
+          <img src="assets/admin-ai-clear-warning.png" alt="показать предупреждение перед очисткой AI-истории" loading="lazy">
+        </a>
+        <figcaption><code>admin-ai-clear-warning.png</code><br>показать предупреждение перед очисткой AI-истории</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-shop-menu.png" target="_blank" rel="noopener">
+          <img src="assets/admin-shop-menu.png" alt="показать меню управления магазином" loading="lazy">
+        </a>
+        <figcaption><code>admin-shop-menu.png</code><br>показать меню управления магазином</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-shop-add-name.png" target="_blank" rel="noopener">
+          <img src="assets/admin-shop-add-name.png" alt="показать запрос названия товара" loading="lazy">
+        </a>
+        <figcaption><code>admin-shop-add-name.png</code><br>показать запрос названия товара</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-shop-add-price.png" target="_blank" rel="noopener">
+          <img src="assets/admin-shop-add-price.png" alt="показать запрос цены товара" loading="lazy">
+        </a>
+        <figcaption><code>admin-shop-add-price.png</code><br>показать запрос цены товара</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-shop-add-photo.png" target="_blank" rel="noopener">
+          <img src="assets/admin-shop-add-photo.png" alt="показать запрос фото товара или символа `-`" loading="lazy">
+        </a>
+        <figcaption><code>admin-shop-add-photo.png</code><br>показать запрос фото товара или символа `-`</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-shop-delete-list.png" target="_blank" rel="noopener">
+          <img src="assets/admin-shop-delete-list.png" alt="показать список удаления товаров" loading="lazy">
+        </a>
+        <figcaption><code>admin-shop-delete-list.png</code><br>показать список удаления товаров</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-add-class.png" target="_blank" rel="noopener">
+          <img src="assets/admin-add-class.png" alt="показать запрос добавления нового класса" loading="lazy">
+        </a>
+        <figcaption><code>admin-add-class.png</code><br>показать запрос добавления нового класса</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-add-subject.png" target="_blank" rel="noopener">
+          <img src="assets/admin-add-subject.png" alt="показать запрос добавления нового предмета" loading="lazy">
+        </a>
+        <figcaption><code>admin-add-subject.png</code><br>показать запрос добавления нового предмета</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-link-class.png" target="_blank" rel="noopener">
+          <img src="assets/admin-link-class.png" alt="показать выбор класса перед привязкой предмета" loading="lazy">
+        </a>
+        <figcaption><code>admin-link-class.png</code><br>показать выбор класса перед привязкой предмета</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-link-subject.png" target="_blank" rel="noopener">
+          <img src="assets/admin-link-subject.png" alt="показать выбор предмета перед привязкой" loading="lazy">
+        </a>
+        <figcaption><code>admin-link-subject.png</code><br>показать выбор предмета перед привязкой</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-view-class.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-view-class.png" alt="показать выбор класса для просмотра расписания" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-view-class.png</code><br>показать выбор класса для просмотра расписания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-view-week.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-view-week.png" alt="показать недельное расписание класса" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-view-week.png</code><br>показать недельное расписание класса</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-setup-class.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-setup-class.png" alt="показать выбор класса для настройки расписания" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-setup-class.png</code><br>показать выбор класса для настройки расписания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-setup-day.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-setup-day.png" alt="показать выбор дня недели для настройки расписания" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-setup-day.png</code><br>показать выбор дня недели для настройки расписания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-setup-lesson.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-setup-lesson.png" alt="показать выбор урока или состояние быстрого ввода" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-setup-lesson.png</code><br>показать выбор урока или состояние быстрого ввода</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-schedule-setup-subject.png" target="_blank" rel="noopener">
+          <img src="assets/admin-schedule-setup-subject.png" alt="показать выбор предмета в ручной настройке расписания" loading="lazy">
+        </a>
+        <figcaption><code>admin-schedule-setup-subject.png</code><br>показать выбор предмета в ручной настройке расписания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-broadcast-audience.png" target="_blank" rel="noopener">
+          <img src="assets/admin-broadcast-audience.png" alt="показать выбор аудитории для рассылки" loading="lazy">
+        </a>
+        <figcaption><code>admin-broadcast-audience.png</code><br>показать выбор аудитории для рассылки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-broadcast-text.png" target="_blank" rel="noopener">
+          <img src="assets/admin-broadcast-text.png" alt="показать запрос текста рассылки" loading="lazy">
+        </a>
+        <figcaption><code>admin-broadcast-text.png</code><br>показать запрос текста рассылки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-holiday-menu.png" target="_blank" rel="noopener">
+          <img src="assets/admin-holiday-menu.png" alt="показать меню режима каникул с текущим статусом" loading="lazy">
+        </a>
+        <figcaption><code>admin-holiday-menu.png</code><br>показать меню режима каникул с текущим статусом</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-holiday-date.png" target="_blank" rel="noopener">
+          <img src="assets/admin-holiday-date.png" alt="показать запрос даты окончания каникул" loading="lazy">
+        </a>
+        <figcaption><code>admin-holiday-date.png</code><br>показать запрос даты окончания каникул</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-goal-class.png" target="_blank" rel="noopener">
+          <img src="assets/admin-goal-class.png" alt="показать выбор класса для цели класса" loading="lazy">
+        </a>
+        <figcaption><code>admin-goal-class.png</code><br>показать выбор класса для цели класса</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-goal-title.png" target="_blank" rel="noopener">
+          <img src="assets/admin-goal-title.png" alt="показать запрос названия цели" loading="lazy">
+        </a>
+        <figcaption><code>admin-goal-title.png</code><br>показать запрос названия цели</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-goal-amount.png" target="_blank" rel="noopener">
+          <img src="assets/admin-goal-amount.png" alt="показать запрос целевой суммы" loading="lazy">
+        </a>
+        <figcaption><code>admin-goal-amount.png</code><br>показать запрос целевой суммы</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/admin-goal-photo.png" target="_blank" rel="noopener">
+          <img src="assets/admin-goal-photo.png" alt="показать запрос фото цели или символа `-`" loading="lazy">
+        </a>
+        <figcaption><code>admin-goal-photo.png</code><br>показать запрос фото цели или символа `-`</figcaption>
+      </figure>
+    </div>
+    
+  </section>
+</div>
+</body>
+</html>

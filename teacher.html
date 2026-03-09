@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Инструкция для учителя | School Bot</title>
+<style>
+:root{
+  --bg:#f6efe4;
+  --paper:#fffdf8;
+  --line:#ddd1bd;
+  --text:#1f2d3a;
+  --muted:#5d6873;
+  --accent:#0f766e;
+  --accent-strong:#0a5a53;
+  --accent-soft:#e2f5f2;
+  --warn:#fff1d9;
+  --warn-line:#d98a43;
+  --dark:#172431;
+  --shadow:0 12px 40px rgba(23,36,49,.08);
+  --shadow-soft:0 8px 24px rgba(23,36,49,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at top left,#fffdf8 0,#f6efe4 42%,#efe4d2 100%);color:var(--text);font-family:"Trebuchet MS","Segoe UI",sans-serif;line-height:1.6}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:24px}
+.topbar{position:sticky;top:12px;z-index:30;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 18px;margin-bottom:18px;background:rgba(255,253,248,.84);backdrop-filter:blur(14px);border:1px solid rgba(221,209,189,.9);border-radius:20px;box-shadow:var(--shadow-soft)}
+.brand{font-weight:800;letter-spacing:.02em}
+.topnav{display:flex;flex-wrap:wrap;gap:8px}
+.topnav a{padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);text-decoration:none;font-size:14px;font-weight:700}
+.topnav a:hover{border-color:var(--accent);color:var(--accent)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#fffdf8 0,#e7f4f7 52%,#f8eadf 100%)}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:999px;opacity:.38;pointer-events:none}
+.hero:before{width:320px;height:320px;right:-110px;top:-120px;background:radial-gradient(circle,#d8f0ea 0,rgba(216,240,234,0) 70%)}
+.hero:after{width:280px;height:280px;left:-90px;bottom:-150px;background:radial-gradient(circle,#f9d9c8 0,rgba(249,217,200,0) 72%)}
+.hero>*{position:relative}
+h1,h2,h3,h4{margin:0 0 12px;color:var(--text)}
+h1{font-size:46px;line-height:1.04;max-width:760px}
+h2{font-size:30px;padding-top:6px}
+h3{font-size:22px;margin-top:18px}
+h4{font-size:18px;margin-top:14px}
+.lead{font-size:18px;max-width:820px}
+p,li{color:var(--muted)}
+ul,ol{margin:10px 0 0 22px;padding:0}
+.chips,.hero-actions,.kpis{display:flex;flex-wrap:wrap;gap:10px}
+.kpi{flex:1 1 180px;min-width:180px;padding:16px 18px;border-radius:20px;background:rgba(255,255,255,.7);border:1px solid rgba(221,209,189,.85);box-shadow:var(--shadow-soft)}
+.kpi strong{display:block;font-size:28px;line-height:1;color:var(--accent-strong);margin-bottom:6px}
+.pill,.chip{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;text-decoration:none;font-weight:700}
+.pill{background:#fff;border:1px solid var(--line)}
+.pill:hover{border-color:var(--accent);color:var(--accent)}
+.chip{background:var(--accent-soft);color:var(--accent);font-size:14px}
+.section-label{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-strong)}
+.note,.warn,.shot,.stepbox,.faq{border-radius:18px;padding:18px;margin-top:14px}
+.note{background:#eef6f8;border:1px solid #c9e4e8}
+.warn{background:var(--warn);border-left:6px solid var(--warn-line)}
+.shot{background:#fcfaf5;border:2px dashed var(--line);color:var(--muted)}
+.stepbox{background:#f9f6ef;border:1px solid var(--line)}
+.faq{background:#f4f8fb;border:1px solid #d9e8ee}
+.table{display:grid;grid-template-columns:220px 1fr;gap:10px 16px;margin-top:16px}
+.table div{padding:10px 12px;border-radius:14px;background:#faf7f1}
+.table div:nth-child(odd){font-weight:700;color:var(--text)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:16px}
+.figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:0 6px 18px rgba(23,36,49,.05);transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease}
+.figure:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(23,36,49,.09);border-color:#cdbca0}
+.figure a{display:block;text-decoration:none}
+.figure img{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;border-radius:12px;border:1px solid var(--line);background:#fff}
+.figure figcaption{margin-top:10px;color:var(--muted);font-size:14px}
+.missing{margin-top:14px;padding:14px 16px;border-radius:16px;background:#fff7ed;border:1px solid #f1c27d;color:#8a4b12}
+.section-end{display:flex;justify-content:flex-end;margin-top:18px}
+.backlink{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);text-decoration:none;font-weight:700;font-size:14px}
+.backlink:hover{border-color:var(--accent);color:var(--accent)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+code{background:#ecf4f6;padding:2px 7px;border-radius:8px}
+@media (max-width:900px){
+  .topbar{top:8px;flex-direction:column;align-items:flex-start}
+}
+@media (max-width:740px){
+  .wrap{padding:14px}
+  .card{padding:20px;border-radius:22px}
+  h1{font-size:34px}
+  h2{font-size:26px}
+  .table{grid-template-columns:1fr}
+  .kpi{min-width:unset;flex:1 1 100%}
+  .figure img{aspect-ratio:auto}
+}
+@media print{
+  body{background:#fff}
+  .topbar,.backlink{display:none !important}
+  .card{box-shadow:none;page-break-inside:avoid}
+  .figure{box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar" id="top">
+    <div class="brand">School Bot Guide</div>
+  </div>
+  <section class="card hero">
+    <div class="section-label">👩‍🏫 Только кабинет учителя</div>
+    <h1>Инструкция для учителя</h1>
+    <p class="lead">Полная инструкция по выдаче заданий, журналу, отчетам, объявлениям, проверке ДЗ и AI-инструментам.</p>
+    <div class="hero-actions">
+      <a class="pill" href="#teacher">Перейти к инструкции</a>
+    </div>
+  </section>
+
+  <section class="card" id="teacher">
+    <div class="section-label">👩‍🏫 Кабинет учителя</div>
+    <h2>👩‍🏫 Кабинет учителя</h2>
+    <p>Кабинет учителя объединяет все ежедневные рабочие сценарии: выдачу домашнего задания, ведение журнала, объявление для класса, отчеты, проверку выполненных заданий, голосовой ввод оценок и AI-инструменты.</p>
+    <div class="chips">
+      <span class="chip">🏫 Учебный процесс</span>
+      <span class="chip">👮‍♂️ Контроль и Отчеты</span>
+      <span class="chip">🧰 Инструменты и Связь</span>
+      <span class="chip">ℹ️ Инструкция</span>
+    </div>
+    <div class="shot"><strong>Главный экран учителя</strong><div class="gallery">
+      <figure class="figure">
+        <a href="assets/teacher-main.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-main.png" alt="показать главное меню учителя" loading="lazy">
+        </a>
+        <figcaption><code>teacher-main.png</code><br>показать главное меню учителя</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-work-menu.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-work-menu.png" alt="показать содержимое папки `🏫 Учебный процесс`" loading="lazy">
+        </a>
+        <figcaption><code>teacher-work-menu.png</code><br>показать содержимое папки `🏫 Учебный процесс`</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-control-menu.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-control-menu.png" alt="показать раздел `👮‍♂️ Контроль и Отчеты`" loading="lazy">
+        </a>
+        <figcaption><code>teacher-control-menu.png</code><br>показать раздел `👮‍♂️ Контроль и Отчеты`</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-tools-menu.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-tools-menu.png" alt="показать раздел `🧰 Инструменты и Связь`" loading="lazy">
+        </a>
+        <figcaption><code>teacher-tools-menu.png</code><br>показать раздел `🧰 Инструменты и Связь`</figcaption>
+      </figure>
+    </div></div>
+
+    <h3>Главное меню учителя</h3>
+    <div class="table">
+      <div>🏫 Учебный процесс</div><div>Выдача домашнего задания, журнал, расписание классов.</div>
+      <div>👮‍♂️ Контроль и Отчеты</div><div>Проверка домашней работы и формирование Excel-отчетов.</div>
+      <div>🧰 Инструменты и Связь</div><div>Объявления для класса и AI-генерация тестов.</div>
+      <div>ℹ️ Инструкция</div><div>Ссылка на руководство именно для учителя.</div>
+    </div>
+
+    <h3>Раздел «Учебный процесс»</h3>
+    <div class="chips">
+      <span class="chip">📝 Добавить задание</span>
+      <span class="chip">⭐️ Журнал</span>
+      <span class="chip">📅 Расписание классов</span>
+      <span class="chip">🔙 Меню учителя</span>
+    </div>
+
+    <h4>📝 Добавить задание</h4>
+    <ol>
+      <li>Учитель нажимает <code>📝 Добавить задание</code>.</li>
+      <li>Выбирает класс.</li>
+      <li>Выбирает предмет.</li>
+      <li>Отправляет текст задания, фотографию или документ.</li>
+      <li>Бот сохраняет задание и подтверждает успешную запись.</li>
+    </ol>
+    <div class="note">Если вместе с текстом прикрепить фото или документ, бот сохранит и текст, и вложение. Это удобно для карточек, презентаций и сканов страниц.</div>
+
+    <h4>⭐️ Журнал</h4>
+    <ol>
+      <li>Учитель нажимает <code>⭐️ Журнал</code>.</li>
+      <li>Выбирает класс и предмет.</li>
+      <li>Выбирает дату: сегодня, вчера или вводит свою.</li>
+      <li>Выбирает ученика.</li>
+      <li>Ставит оценку от 1 до 10 или вариант <code>❌ Не был (Н)</code>.</li>
+      <li>По желанию добавляет комментарий для родителей.</li>
+      <li>Бот сохраняет оценку, начисляет бонусы ученику, проверяет достижения и уведомляет ученика и родителей.</li>
+    </ol>
+    <div class="warn">
+      <strong>Что важно знать про журнал:</strong>
+      <ul>
+        <li>Комментарий необязателен, но если он есть, сервис может сделать его более корректным и понятным для родителей.</li>
+        <li>После сохранения учитель остается в сценарии выставления оценок и может быстро продолжить работу со следующим учеником.</li>
+        <li>Если учеников в классе нет, бот не даст перейти дальше.</li>
+      </ul>
+    </div>
+    <div class="shot"><strong>Сценарий выставления оценки</strong><div class="gallery">
+      <figure class="figure">
+        <a href="assets/teacher-grade-date.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-date.png" alt="показать выбор даты для оценки" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-date.png</code><br>показать выбор даты для оценки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-student.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-student.png" alt="показать выбор ученика в сценарии журнала" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-student.png</code><br>показать выбор ученика в сценарии журнала</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-value.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-value.png" alt="показать выбор оценки" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-value.png</code><br>показать выбор оценки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-comment.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-comment.png" alt="показать выбор, добавлять ли комментарий" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-comment.png</code><br>показать выбор, добавлять ли комментарий</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-success.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-success.png" alt="показать успешное сохранение оценки" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-success.png</code><br>показать успешное сохранение оценки</figcaption>
+      </figure>
+    </div></div>
+
+    <h4>📅 Расписание классов</h4>
+    <p>Учитель выбирает класс и получает полное недельное расписание. Экран нужен для быстрой сверки занятости без перехода в админский кабинет.</p>
+
+    <h3>Раздел «Контроль и Отчеты»</h3>
+    <div class="chips">
+      <span class="chip">🔍 Проверка ДЗ</span>
+      <span class="chip">📉 Отчеты</span>
+      <span class="chip">🔙 Меню учителя</span>
+    </div>
+
+    <h4>🔍 Проверка ДЗ</h4>
+    <ol>
+      <li>Учитель выбирает класс.</li>
+      <li>Затем выбирает предмет.</li>
+      <li>Бот ищет активные домашние задания и учеников, которые отметили их как выполненные.</li>
+      <li>Появляется режим последовательной проверки.</li>
+      <li>Для каждого ученика доступны два вердикта: <code>✅ Всё верно</code> или <code>💀 ОБМАН!</code>.</li>
+    </ol>
+    <div class="table">
+      <div>✅ Всё верно</div><div>Ученик получает небольшое поощрение XP, а проверка переходит к следующему.</div>
+      <div>💀 ОБМАН!</div><div>Статус выполнения сбрасывается, чтобы ученик не получал выгоду за ложную отметку о сделанном задании.</div>
+    </div>
+
+    <h4>📉 Отчеты</h4>
+    <ol>
+      <li>Учитель выбирает класс.</li>
+      <li>Выбирает месяц.</li>
+      <li>Бот собирает Excel-файл с оценками по дням, средними баллами и отдельным листом комментариев.</li>
+      <li>Готовый файл отправляется прямо в чат Telegram как документ.</li>
+    </ol>
+    <div class="note">Это не просто выгрузка оценок. В отчете есть распределение по предметам, средний балл и отдельная вкладка для комментариев, если они были оставлены при выставлении оценок.</div>
+
+    <h3>Раздел «Инструменты и Связь»</h3>
+    <div class="chips">
+      <span class="chip">📝 Создать тест</span>
+      <span class="chip">📢 Объявление</span>
+      <span class="chip">🔙 Меню учителя</span>
+    </div>
+
+    <h4>📢 Объявление</h4>
+    <ol>
+      <li>Учитель выбирает класс.</li>
+      <li>Пишет текст сообщения или отправляет медиа.</li>
+      <li>Бот автоматически рассылает сообщение ученикам и родителям выбранного класса.</li>
+      <li>После завершения бот показывает, скольким ученикам и родителям удалось доставить сообщение.</li>
+    </ol>
+    <div class="warn">Если кто-то заблокировал бота или не запускал его, сообщение может не дойти. Именно поэтому в финале показывается реальное количество доставок.</div>
+
+    <h4>📝 Создать тест</h4>
+    <p>Это AI-помощник для быстрого создания учебного теста. Учитель вводит тему и класс, после чего бот генерирует набор вопросов с вариантами ответов. Этот режим полезен для быстрых проверочных работ, разминок и подготовки к уроку.</p>
+
+    <h3>Дополнительная функция: голосовой ввод оценок</h3>
+    <p>Учитель может отправить голосовое сообщение. Бот распознает речь, пытается извлечь фамилию ученика, предмет и оценку, а затем сохраняет запись. Если предмет не распознан, бот может взять первый доступный предмет класса. Это режим быстрого ввода, поэтому после внедрения его стоит отдельно показать на примере.</p>
+    <div class="shot"><strong>Голосовой ввод оценок</strong><div class="missing"><strong>Скриншот пока не вставлен:</strong> <code>teacher-voice.png</code>. Остальные сценарии учителя уже встроены ниже в общую галерею.</div></div>
+
+    <h3>Частые ошибки учителя</h3>
+    <div class="faq">
+      <ul>
+        <li><strong>Не появляется список предметов.</strong> Скорее всего, предметы еще не привязаны к классу администратором.</li>
+        <li><strong>Не приходит отчет.</strong> Проверьте, есть ли в выбранном месяце оценки и ученики в классе.</li>
+        <li><strong>Объявление ушло не всем.</strong> Обычно причина в том, что пользователь не запускал бота или запретил ему сообщения.</li>
+        <li><strong>Голосовая оценка сохранилась неверно.</strong> В этом случае стоит использовать обычный журнал и показать учителю шаблон корректной голосовой команды.</li>
+      </ul>
+    </div>
+
+    <h3>Скриншоты кабинета учителя</h3>
+    <p>Это полный комплект доступных экранов учителя: основные меню, журнал, отчеты, объявления, проверка ДЗ и запуск AI-теста.</p>
+<div class="gallery">
+      <figure class="figure">
+        <a href="assets/teacher-main.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-main.png" alt="показать главное меню учителя" loading="lazy">
+        </a>
+        <figcaption><code>teacher-main.png</code><br>показать главное меню учителя</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-work-menu.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-work-menu.png" alt="показать содержимое папки `🏫 Учебный процесс`" loading="lazy">
+        </a>
+        <figcaption><code>teacher-work-menu.png</code><br>показать содержимое папки `🏫 Учебный процесс`</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-add-homework-class.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-add-homework-class.png" alt="показать выбор класса для домашнего задания" loading="lazy">
+        </a>
+        <figcaption><code>teacher-add-homework-class.png</code><br>показать выбор класса для домашнего задания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-add-homework-subject.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-add-homework-subject.png" alt="показать выбор предмета для домашнего задания" loading="lazy">
+        </a>
+        <figcaption><code>teacher-add-homework-subject.png</code><br>показать выбор предмета для домашнего задания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-add-homework-text.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-add-homework-text.png" alt="показать запрос текста задания или фото" loading="lazy">
+        </a>
+        <figcaption><code>teacher-add-homework-text.png</code><br>показать запрос текста задания или фото</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-class.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-class.png" alt="показать выбор класса для журнала" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-class.png</code><br>показать выбор класса для журнала</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-subject.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-subject.png" alt="показать выбор предмета для журнала" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-subject.png</code><br>показать выбор предмета для журнала</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-date.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-date.png" alt="показать выбор даты для оценки" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-date.png</code><br>показать выбор даты для оценки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-student.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-student.png" alt="показать выбор ученика в сценарии журнала" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-student.png</code><br>показать выбор ученика в сценарии журнала</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-value.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-value.png" alt="показать выбор оценки" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-value.png</code><br>показать выбор оценки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-comment.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-comment.png" alt="показать выбор, добавлять ли комментарий" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-comment.png</code><br>показать выбор, добавлять ли комментарий</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-grade-success.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-grade-success.png" alt="показать успешное сохранение оценки" loading="lazy">
+        </a>
+        <figcaption><code>teacher-grade-success.png</code><br>показать успешное сохранение оценки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-schedule-class.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-schedule-class.png" alt="показать выбор класса для просмотра расписания" loading="lazy">
+        </a>
+        <figcaption><code>teacher-schedule-class.png</code><br>показать выбор класса для просмотра расписания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-schedule-week.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-schedule-week.png" alt="показать недельное расписание класса" loading="lazy">
+        </a>
+        <figcaption><code>teacher-schedule-week.png</code><br>показать недельное расписание класса</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-control-menu.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-control-menu.png" alt="показать раздел `👮‍♂️ Контроль и Отчеты`" loading="lazy">
+        </a>
+        <figcaption><code>teacher-control-menu.png</code><br>показать раздел `👮‍♂️ Контроль и Отчеты`</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-check-hw-class.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-check-hw-class.png" alt="показать выбор класса для проверки домашнего задания" loading="lazy">
+        </a>
+        <figcaption><code>teacher-check-hw-class.png</code><br>показать выбор класса для проверки домашнего задания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-check-hw-subject.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-check-hw-subject.png" alt="показать выбор предмета для проверки домашнего задания" loading="lazy">
+        </a>
+        <figcaption><code>teacher-check-hw-subject.png</code><br>показать выбор предмета для проверки домашнего задания</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-check-hw-roulette.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-check-hw-roulette.png" alt="показать экран проверки в режиме «рулетки»" loading="lazy">
+        </a>
+        <figcaption><code>teacher-check-hw-roulette.png</code><br>показать экран проверки в режиме «рулетки»</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-report-class.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-report-class.png" alt="показать выбор класса для отчетов" loading="lazy">
+        </a>
+        <figcaption><code>teacher-report-class.png</code><br>показать выбор класса для отчетов</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-report-month.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-report-month.png" alt="показать выбор месяца для отчетов" loading="lazy">
+        </a>
+        <figcaption><code>teacher-report-month.png</code><br>показать выбор месяца для отчетов</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-tools-menu.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-tools-menu.png" alt="показать раздел `🧰 Инструменты и Связь`" loading="lazy">
+        </a>
+        <figcaption><code>teacher-tools-menu.png</code><br>показать раздел `🧰 Инструменты и Связь`</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-broadcast-class.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-broadcast-class.png" alt="показать выбор класса для объявления" loading="lazy">
+        </a>
+        <figcaption><code>teacher-broadcast-class.png</code><br>показать выбор класса для объявления</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-broadcast-text.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-broadcast-text.png" alt="показать запрос текста объявления" loading="lazy">
+        </a>
+        <figcaption><code>teacher-broadcast-text.png</code><br>показать запрос текста объявления</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/teacher-quiz-start.png" target="_blank" rel="noopener">
+          <img src="assets/teacher-quiz-start.png" alt="показать стартовый экран генерации теста" loading="lazy">
+        </a>
+        <figcaption><code>teacher-quiz-start.png</code><br>показать стартовый экран генерации теста</figcaption>
+      </figure>
+    </div>
+    <div class="missing"><strong>Не хватает файлов:</strong> <code>teacher-voice.png</code>. После добавления их можно вставить в этот же раздел без изменения структуры.</div>
+    
+  </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Инструкция для родителя | School Bot</title>
+<style>
+:root{
+  --bg:#f6efe4;
+  --paper:#fffdf8;
+  --line:#ddd1bd;
+  --text:#1f2d3a;
+  --muted:#5d6873;
+  --accent:#0f766e;
+  --accent-strong:#0a5a53;
+  --accent-soft:#e2f5f2;
+  --warn:#fff1d9;
+  --warn-line:#d98a43;
+  --dark:#172431;
+  --shadow:0 12px 40px rgba(23,36,49,.08);
+  --shadow-soft:0 8px 24px rgba(23,36,49,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at top left,#fffdf8 0,#f6efe4 42%,#efe4d2 100%);color:var(--text);font-family:"Trebuchet MS","Segoe UI",sans-serif;line-height:1.6}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:24px}
+.topbar{position:sticky;top:12px;z-index:30;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 18px;margin-bottom:18px;background:rgba(255,253,248,.84);backdrop-filter:blur(14px);border:1px solid rgba(221,209,189,.9);border-radius:20px;box-shadow:var(--shadow-soft)}
+.brand{font-weight:800;letter-spacing:.02em}
+.topnav{display:flex;flex-wrap:wrap;gap:8px}
+.topnav a{padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);text-decoration:none;font-size:14px;font-weight:700}
+.topnav a:hover{border-color:var(--accent);color:var(--accent)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#fffdf8 0,#e7f4f7 52%,#f8eadf 100%)}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:999px;opacity:.38;pointer-events:none}
+.hero:before{width:320px;height:320px;right:-110px;top:-120px;background:radial-gradient(circle,#d8f0ea 0,rgba(216,240,234,0) 70%)}
+.hero:after{width:280px;height:280px;left:-90px;bottom:-150px;background:radial-gradient(circle,#f9d9c8 0,rgba(249,217,200,0) 72%)}
+.hero>*{position:relative}
+h1,h2,h3,h4{margin:0 0 12px;color:var(--text)}
+h1{font-size:46px;line-height:1.04;max-width:760px}
+h2{font-size:30px;padding-top:6px}
+h3{font-size:22px;margin-top:18px}
+h4{font-size:18px;margin-top:14px}
+.lead{font-size:18px;max-width:820px}
+p,li{color:var(--muted)}
+ul,ol{margin:10px 0 0 22px;padding:0}
+.chips,.hero-actions,.kpis{display:flex;flex-wrap:wrap;gap:10px}
+.kpi{flex:1 1 180px;min-width:180px;padding:16px 18px;border-radius:20px;background:rgba(255,255,255,.7);border:1px solid rgba(221,209,189,.85);box-shadow:var(--shadow-soft)}
+.kpi strong{display:block;font-size:28px;line-height:1;color:var(--accent-strong);margin-bottom:6px}
+.pill,.chip{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;text-decoration:none;font-weight:700}
+.pill{background:#fff;border:1px solid var(--line)}
+.pill:hover{border-color:var(--accent);color:var(--accent)}
+.chip{background:var(--accent-soft);color:var(--accent);font-size:14px}
+.section-label{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-strong)}
+.note,.warn,.shot,.stepbox,.faq{border-radius:18px;padding:18px;margin-top:14px}
+.note{background:#eef6f8;border:1px solid #c9e4e8}
+.warn{background:var(--warn);border-left:6px solid var(--warn-line)}
+.shot{background:#fcfaf5;border:2px dashed var(--line);color:var(--muted)}
+.stepbox{background:#f9f6ef;border:1px solid var(--line)}
+.faq{background:#f4f8fb;border:1px solid #d9e8ee}
+.table{display:grid;grid-template-columns:220px 1fr;gap:10px 16px;margin-top:16px}
+.table div{padding:10px 12px;border-radius:14px;background:#faf7f1}
+.table div:nth-child(odd){font-weight:700;color:var(--text)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:16px}
+.figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:0 6px 18px rgba(23,36,49,.05);transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease}
+.figure:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(23,36,49,.09);border-color:#cdbca0}
+.figure a{display:block;text-decoration:none}
+.figure img{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;border-radius:12px;border:1px solid var(--line);background:#fff}
+.figure figcaption{margin-top:10px;color:var(--muted);font-size:14px}
+.missing{margin-top:14px;padding:14px 16px;border-radius:16px;background:#fff7ed;border:1px solid #f1c27d;color:#8a4b12}
+.section-end{display:flex;justify-content:flex-end;margin-top:18px}
+.backlink{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);text-decoration:none;font-weight:700;font-size:14px}
+.backlink:hover{border-color:var(--accent);color:var(--accent)}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+code{background:#ecf4f6;padding:2px 7px;border-radius:8px}
+@media (max-width:900px){
+  .topbar{top:8px;flex-direction:column;align-items:flex-start}
+}
+@media (max-width:740px){
+  .wrap{padding:14px}
+  .card{padding:20px;border-radius:22px}
+  h1{font-size:34px}
+  h2{font-size:26px}
+  .table{grid-template-columns:1fr}
+  .kpi{min-width:unset;flex:1 1 100%}
+  .figure img{aspect-ratio:auto}
+}
+@media print{
+  body{background:#fff}
+  .topbar,.backlink{display:none !important}
+  .card{box-shadow:none;page-break-inside:avoid}
+  .figure{box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar" id="top">
+    <div class="brand">School Bot Guide</div>
+  </div>
+  <section class="card hero">
+    <div class="section-label">👨‍👩‍👧 Только кабинет родителя</div>
+    <h1>Инструкция для родителя</h1>
+    <p class="lead">Все, что нужно родителю для контроля успеваемости, целей, AI-анализа недели и управления ребенком.</p>
+    <div class="hero-actions">
+      <a class="pill" href="#parent">Перейти к инструкции</a>
+    </div>
+  </section>
+
+  <section class="card" id="parent">
+    <div class="section-label">👨‍👩‍👧 Кабинет родителя</div>
+    <h2>👨‍👩‍👧 Кабинет родителя</h2>
+    <p>Кабинет родителя нужен для наблюдения и мягкого управления: привязать ребенка, смотреть успеваемость, получать AI-анализ недели, ставить цели по оценкам, включать режим тишины на время болезни и при необходимости отвязывать ребенка от профиля.</p>
+    <div class="chips">
+      <span class="chip">📊 Успеваемость</span>
+      <span class="chip">👨‍👩‍👧‍👦 Мои дети</span>
+      <span class="chip">👶 Добавить ребенка</span>
+      <span class="chip">ℹ️ Инструкция</span>
+    </div>
+    <div class="shot"><strong>Главный экран родителя</strong><div class="gallery">
+      <figure class="figure">
+        <a href="assets/parent-main.png" target="_blank" rel="noopener">
+          <img src="assets/parent-main.png" alt="показать главное меню родителя" loading="lazy">
+        </a>
+        <figcaption><code>parent-main.png</code><br>показать главное меню родителя</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-children-list.png" target="_blank" rel="noopener">
+          <img src="assets/parent-children-list.png" alt="показать список в разделе `Мои дети`" loading="lazy">
+        </a>
+        <figcaption><code>parent-children-list.png</code><br>показать список в разделе `Мои дети`</figcaption>
+      </figure>
+    </div></div>
+
+    <h3>Главное меню родителя</h3>
+    <div class="table">
+      <div>👶 Добавить ребенка</div><div>Запускает привязку ученика по его Telegram ID.</div>
+      <div>📊 Успеваемость</div><div>Быстрый доступ к сводке по ребенку: оценки, домашние задания, XP и монеты.</div>
+      <div>👨‍👩‍👧‍👦 Мои дети</div><div>Открывает управление каждым привязанным ребенком: аналитика, цели, статус болезни и отвязка.</div>
+      <div>ℹ️ Инструкция</div><div>Открывает ссылку на руководство для родителей.</div>
+    </div>
+
+    <h3>👶 Добавить ребенка</h3>
+    <ol>
+      <li>Родитель нажимает <code>👶 Добавить ребенка</code>.</li>
+      <li>Бот просит ввести ID ребенка.</li>
+      <li>Родитель вводит числовой ID, который ученик видит в своем профиле.</li>
+      <li>При успешной привязке бот подтверждает, что ребенок добавлен.</li>
+    </ol>
+    <div class="warn">Если введен нечисловой ID или такого ученика нет в системе, бот покажет ошибку. В инструкции важно отдельно показать, где ученик берет свой ID.</div>
+
+    <h3>📊 Успеваемость</h3>
+    <ol>
+      <li>Родитель нажимает <code>📊 Успеваемость</code>.</li>
+      <li>Выбирает одного из привязанных детей.</li>
+      <li>Бот формирует детальную карточку по всем предметам.</li>
+      <li>Внутри карточки отображаются оценки, средний балл, статус домашнего задания, XP, монеты и текущее звание.</li>
+    </ol>
+    <div class="shot"><strong>Успеваемость и цели родителя</strong><div class="gallery">
+      <figure class="figure">
+        <a href="assets/parent-progress.png" target="_blank" rel="noopener">
+          <img src="assets/parent-progress.png" alt="показать подробный отчет по ребенку" loading="lazy">
+        </a>
+        <figcaption><code>parent-progress.png</code><br>показать подробный отчет по ребенку</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-child-manage.png" target="_blank" rel="noopener">
+          <img src="assets/parent-child-manage.png" alt="показать меню управления выбранным ребенком" loading="lazy">
+        </a>
+        <figcaption><code>parent-child-manage.png</code><br>показать меню управления выбранным ребенком</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-goal-subject.png" target="_blank" rel="noopener">
+          <img src="assets/parent-goal-subject.png" alt="показать выбор предмета для цели" loading="lazy">
+        </a>
+        <figcaption><code>parent-goal-subject.png</code><br>показать выбор предмета для цели</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-goal-grade.png" target="_blank" rel="noopener">
+          <img src="assets/parent-goal-grade.png" alt="показать выбор целевой оценки" loading="lazy">
+        </a>
+        <figcaption><code>parent-goal-grade.png</code><br>показать выбор целевой оценки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-goal-reward.png" target="_blank" rel="noopener">
+          <img src="assets/parent-goal-reward.png" alt="показать запрос награды" loading="lazy">
+        </a>
+        <figcaption><code>parent-goal-reward.png</code><br>показать запрос награды</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-goals-list.png" target="_blank" rel="noopener">
+          <img src="assets/parent-goals-list.png" alt="показать список активных целей" loading="lazy">
+        </a>
+        <figcaption><code>parent-goals-list.png</code><br>показать список активных целей</figcaption>
+      </figure>
+    </div></div>
+
+    <h3>👨‍👩‍👧‍👦 Мои дети</h3>
+    <p>Это основной управленческий раздел родителя. После выбора ребенка открывается специальное меню действий.</p>
+    <div class="chips">
+      <span class="chip">📊 Статистика (Цифры)</span>
+      <span class="chip">🤖 AI-Анализ недели</span>
+      <span class="chip">🎯 Поставить цель</span>
+      <span class="chip">📜 Активные цели</span>
+      <span class="chip">🤒 Заболел / Пропуск</span>
+      <span class="chip">❌ Отвязать</span>
+      <span class="chip">🔙 Назад</span>
+    </div>
+    <h4>🤖 AI-Анализ недели</h4>
+    <ol>
+      <li>Родитель выбирает ребенка.</li>
+      <li>Нажимает <code>🤖 AI-Анализ недели</code>.</li>
+      <li>Бот собирает данные за неделю: оценки, пропуски, активность в AI, XP и монеты.</li>
+      <li>После короткой паузы бот выдает структурированный педагогический отчет в уважительном тоне.</li>
+    </ol>
+    <div class="note">Этот отчет полезен не только как сводка, но и как шаблон разговора с ребенком: в нем уже есть сильные стороны, риски и конкретный педагогический совет.</div>
+
+    <h4>🎯 Поставить цель</h4>
+    <ol>
+      <li>Родитель выбирает ребенка.</li>
+      <li>Нажимает <code>🎯 Поставить цель</code>.</li>
+      <li>Выбирает предмет.</li>
+      <li>Выбирает целевую оценку: 8, 9 или 10.</li>
+      <li>Пишет награду в свободной форме: деньги, поездка, подарок, поход в кафе и так далее.</li>
+      <li>Бот сохраняет цель и отправляет уведомление ученику.</li>
+    </ol>
+    <div class="warn">По одному предмету одновременно может быть только одна активная цель. Если цель уже есть, бот предупредит об этом и не создаст дубликат.</div>
+
+    <h4>📜 Активные цели</h4>
+    <p>Раздел показывает уже поставленные цели: предмет, требуемую оценку, награду и имя родителя, который создал цель. Это нужно, чтобы не дублировать обещания и видеть текущую мотивацию ребенка.</p>
+
+    <h4>🤒 Заболел / Пропуск</h4>
+    <ol>
+      <li>Родитель открывает карточку ребенка.</li>
+      <li>Нажимает <code>🤒 Заболел / Пропуск</code>.</li>
+      <li>Выбирает срок: <code>🤒 1 день</code>, <code>🤒 3 дня</code>, <code>🤒 Неделя</code>.</li>
+      <li>Если ребенок вернулся, используется кнопка <code>✅ Выздоровел (Включить)</code>.</li>
+    </ol>
+    <div class="note">Смысл режима в том, чтобы временно не беспокоить уведомлениями. Это не удаляет ребенка и не меняет его оценки, а только влияет на коммуникацию.</div>
+
+    <h4>❌ Отвязать</h4>
+    <p>Отвязка удаляет связь между родителем и выбранным учеником. Если позже нужно будет снова получать данные, ребенка придется привязать заново по его ID.</p>
+
+    <h3>Частые ошибки родителя</h3>
+    <div class="faq">
+      <ul>
+        <li><strong>Не удается добавить ребенка.</strong> Чаще всего введен неверный ID или ребенок еще не зарегистрирован в системе.</li>
+        <li><strong>Нет данных по успеваемости.</strong> У ученика может не быть привязанного класса, предметов или оценок.</li>
+        <li><strong>AI-анализ слишком долго формируется.</strong> Это связано с генерацией текста AI; обычно нужно подождать несколько секунд.</li>
+        <li><strong>Цель не ставится.</strong> Вероятнее всего, по этому предмету уже есть активная цель.</li>
+      </ul>
+    </div>
+
+    <h3>Скриншоты кабинета родителя</h3>
+    <p>Здесь собраны реальные экраны родителя: привязка ребенка, просмотр детей, AI-анализ недели, цели и режим пропуска.</p>
+<div class="gallery">
+      <figure class="figure">
+        <a href="assets/parent-main.png" target="_blank" rel="noopener">
+          <img src="assets/parent-main.png" alt="показать главное меню родителя" loading="lazy">
+        </a>
+        <figcaption><code>parent-main.png</code><br>показать главное меню родителя</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-add-child.png" target="_blank" rel="noopener">
+          <img src="assets/parent-add-child.png" alt="показать запрос ID ребенка" loading="lazy">
+        </a>
+        <figcaption><code>parent-add-child.png</code><br>показать запрос ID ребенка</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-children-pick.png" target="_blank" rel="noopener">
+          <img src="assets/parent-children-pick.png" alt="показать выбор ребенка для просмотра успеваемости" loading="lazy">
+        </a>
+        <figcaption><code>parent-children-pick.png</code><br>показать выбор ребенка для просмотра успеваемости</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-progress.png" target="_blank" rel="noopener">
+          <img src="assets/parent-progress.png" alt="показать подробный отчет по ребенку" loading="lazy">
+        </a>
+        <figcaption><code>parent-progress.png</code><br>показать подробный отчет по ребенку</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-children-list.png" target="_blank" rel="noopener">
+          <img src="assets/parent-children-list.png" alt="показать список в разделе `Мои дети`" loading="lazy">
+        </a>
+        <figcaption><code>parent-children-list.png</code><br>показать список в разделе `Мои дети`</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-child-manage.png" target="_blank" rel="noopener">
+          <img src="assets/parent-child-manage.png" alt="показать меню управления выбранным ребенком" loading="lazy">
+        </a>
+        <figcaption><code>parent-child-manage.png</code><br>показать меню управления выбранным ребенком</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-ai-report.png" target="_blank" rel="noopener">
+          <img src="assets/parent-ai-report.png" alt="показать AI-анализ недели" loading="lazy">
+        </a>
+        <figcaption><code>parent-ai-report.png</code><br>показать AI-анализ недели</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-goal-subject.png" target="_blank" rel="noopener">
+          <img src="assets/parent-goal-subject.png" alt="показать выбор предмета для цели" loading="lazy">
+        </a>
+        <figcaption><code>parent-goal-subject.png</code><br>показать выбор предмета для цели</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-goal-grade.png" target="_blank" rel="noopener">
+          <img src="assets/parent-goal-grade.png" alt="показать выбор целевой оценки" loading="lazy">
+        </a>
+        <figcaption><code>parent-goal-grade.png</code><br>показать выбор целевой оценки</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-goal-reward.png" target="_blank" rel="noopener">
+          <img src="assets/parent-goal-reward.png" alt="показать запрос награды" loading="lazy">
+        </a>
+        <figcaption><code>parent-goal-reward.png</code><br>показать запрос награды</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-goals-list.png" target="_blank" rel="noopener">
+          <img src="assets/parent-goals-list.png" alt="показать список активных целей" loading="lazy">
+        </a>
+        <figcaption><code>parent-goals-list.png</code><br>показать список активных целей</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="assets/parent-sick-menu.png" target="_blank" rel="noopener">
+          <img src="assets/parent-sick-menu.png" alt="показать выбор срока болезни или пропуска" loading="lazy">
+        </a>
+        <figcaption><code>parent-sick-menu.png</code><br>показать выбор срока болезни или пропуска</figcaption>
+      </figure>
+    </div>
+    
+  </section>
+</div>
+</body>
+</html>
